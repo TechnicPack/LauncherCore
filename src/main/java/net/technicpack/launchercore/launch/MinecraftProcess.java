@@ -31,6 +31,7 @@ public class MinecraftProcess {
 		this.commands = commands;
 		this.process = process;
 		this.monitorThread = new ProcessMonitorThread(this);
+		this.monitorThread.hidden = true;
 		this.monitorThread.start();
 	}
 
