@@ -36,15 +36,18 @@ public class ProcessMonitorThread extends Thread {
 		this.process = process;
 	}
 
+	@Override
 	public void run() {
 		InputStreamReader reader = new InputStreamReader(this.process.getProcess().getInputStream());
 		BufferedReader buf = new BufferedReader(reader);
 		String line = null;
+		boolean hidden = true;
 
 		while (true) {
 			try {
 				while ((line = buf.readLine()) != null) {
 					System.out.println(" " + line);
+					hidden = true;
 //					Utils.getLogger().log(Level.WARNING, line);
 //					this.process.getSysOutLines().add(line);
 				}
@@ -53,20 +56,25 @@ public class ProcessMonitorThread extends Thread {
 			} finally {
 				try {
 					buf.close();
+					if (process.getExitListener() != null && hidden == true) {
+						process.getExitListener().onMinecraftExit(process);
+						hidden = false;
+					}
+
 				} catch (IOException ex) {
 //					Logger.getLogger(ProcessMonitorThread.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
 		}
-//		try {
-//			process.getProcess().waitFor();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//			return;
-//		}
-//
-//		if (process.getExitListener() != null) {
-//			process.getExitListener().onMinecraftExit(process);
-//		}
+/*		try {
+			process.getProcess().waitFor();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		if (process.getExitListener() != null) {
+			process.getExitListener().onMinecraftExit(process);
+		} */
 	}
 }
