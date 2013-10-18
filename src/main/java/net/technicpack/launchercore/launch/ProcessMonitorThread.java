@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 public class ProcessMonitorThread extends Thread {
 
 	private final MinecraftProcess process;
+	protected boolean hidden;
 
 	public ProcessMonitorThread(MinecraftProcess process) {
 		super("ProcessMonitorThread");
@@ -41,40 +42,26 @@ public class ProcessMonitorThread extends Thread {
 		InputStreamReader reader = new InputStreamReader(this.process.getProcess().getInputStream());
 		BufferedReader buf = new BufferedReader(reader);
 		String line = null;
-		boolean hidden = true;
 
 		while (true) {
 			try {
 				while ((line = buf.readLine()) != null) {
 					System.out.println(" " + line);
-					hidden = true;
-//					Utils.getLogger().log(Level.WARNING, line);
-//					this.process.getSysOutLines().add(line);
 				}
 			} catch (IOException ex) {
-//				Logger.getLogger(ProcessMonitorThread.class.getName()).log(Level.SEVERE, null, ex);
+				//Do nothing
 			} finally {
 				try {
 					buf.close();
+				} catch (IOException ex) {
+					//Do nothing
+				} finally {
 					if (process.getExitListener() != null && hidden == true) {
 						process.getExitListener().onMinecraftExit(process);
 						hidden = false;
 					}
-
-				} catch (IOException ex) {
-//					Logger.getLogger(ProcessMonitorThread.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
 		}
-/*		try {
-			process.getProcess().waitFor();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			return;
-		}
-
-		if (process.getExitListener() != null) {
-			process.getExitListener().onMinecraftExit(process);
-		} */
 	}
 }
