@@ -64,4 +64,18 @@ public class User {
 	public String getSessionId() {
 		return "token:" + accessToken + ":" + profile.getId();
 	}
+	
+	public boolean isOfflineUser() {
+		return accessToken.equals("0");
+	}
+	
+	public static User createOfflineUser(String username) {
+		User user = new User();
+		user.username = username;
+		user.accessToken = "0";
+		user.clientToken = "0";
+		user.displayName = username;
+		user.profile = Profile.createOfflineProfile(username);
+		return user;
+	}
 }

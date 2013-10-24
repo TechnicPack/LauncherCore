@@ -33,6 +33,12 @@ import java.net.URL;
 public class AuthenticationService {
 	private static final String AUTH_SERVER = "https://authserver.mojang.com/";
 
+	private static boolean appearsOnline = true;
+	
+	public static boolean wasOnline() {
+		return appearsOnline;
+	}
+	
 	public static boolean validate(User user) {
 		ValidateRequest validateRequest = new ValidateRequest(user.getAccessToken());
 		String data = Utils.getMojangGson().toJson(validateRequest);
@@ -76,10 +82,20 @@ public class AuthenticationService {
 		connection.setRequestProperty("Content-Length", rawData.length + "");
 		connection.setRequestProperty("Content-Language", "en-US");
 
-		DataOutputStream writer = new DataOutputStream(connection.getOutputStream());
-		writer.write(rawData);
-		writer.flush();
-		writer.close();
+		DataOutputStream writer = null;
+		try
+		{
+			writer = new DataOutputStream(connection.getOutputStream());
+			writer.write(rawData);
+			writer.flush();
+		}
+		catch(IOException e) {
+			appearsOnline = false;
+			throw e;
+		}
+		finally {
+			if(writer != null) writer.close();
+		}
 
 		InputStream stream = null;
 		try {
@@ -88,10 +104,12 @@ public class AuthenticationService {
 			stream = connection.getErrorStream();
 
 			if (stream == null) {
+				appearsOnline = false;
 				throw e;
 			}
 		}
-
+		
+		appearsOnline = true;
 		return IOUtils.toString(stream);
 	}
 
