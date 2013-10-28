@@ -22,7 +22,7 @@ package net.technicpack.launchercore.auth;
 public class Profile {
 	private String id;
 	private String name;
-
+	
 	public String getId() {
 		return id;
 	}
@@ -37,5 +37,12 @@ public class Profile {
 				"id='" + id + '\'' +
 				", name='" + name + '\'' +
 				'}';
+	}
+	
+	public static Profile createOfflineProfile(String name) {
+		Profile p = new Profile();
+		p.id = "0";
+		p.name = name;
+		return p;
 	}
 }
