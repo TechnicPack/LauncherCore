@@ -40,7 +40,7 @@ public class AuthenticationNetworkFailureException extends IOException {
 	}
 
 	@Override
-	public Throwable getCause() {
-		return cause;
+	public synchronized Throwable getCause() {
+		return this.cause;
 	}
 }
