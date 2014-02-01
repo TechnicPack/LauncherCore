@@ -45,12 +45,12 @@ public class DownloadException extends IOException {
 	}
 
 	@Override
-	public Throwable getCause() {
+	public synchronized Throwable getCause() {
 		return this.cause;
 	}
 
 	@Override
 	public String getMessage() {
-		return message;
+		return this.message;
 	}
 }
