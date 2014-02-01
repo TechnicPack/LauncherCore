@@ -10,7 +10,7 @@ public abstract class ListenerTask implements IInstallTask, DownloadListener {
 	private InstallTasksQueue queue;
 
 	public ListenerTask() {
-		taskProgress = 0;
+		this.taskProgress = 0;
 	}
 
 	@Override
