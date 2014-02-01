@@ -20,6 +20,7 @@ package net.technicpack.launchercore.util;
 
 
 import net.technicpack.launchercore.minecraft.ExtractRules;
+
 import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedInputStream;
@@ -73,6 +74,7 @@ public class ZipUtils {
 			return false;
 		}
 
+		@SuppressWarnings("resource")
 		ZipFile zipFile = new ZipFile(zip);
 		try {
 			ZipEntry entry = zipFile.getEntry(fileName);
@@ -98,7 +100,9 @@ public class ZipUtils {
 
 	private static void unzipEntry(ZipFile zipFile, ZipEntry entry, File outputFile) throws IOException {
 		byte[] buffer = new byte[2048];
+		@SuppressWarnings("resource")
 		BufferedInputStream inputStream = new BufferedInputStream(zipFile.getInputStream(entry));
+		@SuppressWarnings("resource")
 		BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(outputFile));
 		try {
 			int length;
@@ -132,6 +136,7 @@ public class ZipUtils {
 			output.mkdirs();
 		}
 
+		@SuppressWarnings("resource")
 		ZipFile zipFile = new ZipFile(zip);
 		int size = zipFile.size() + 1;
 		int progress = 1;
@@ -176,11 +181,14 @@ public class ZipUtils {
 							"MOJANG_C.SF",
 							"CODESIGN.RSA",
 							"CODESIGN.SF"};
+		@SuppressWarnings("resource")
 		JarFile jarFile = new JarFile(minecraft);
 		try {
 			String fileName = jarFile.getName();
+			@SuppressWarnings("unused")
 			String fileNameLastPart = fileName.substring(fileName.lastIndexOf(File.separator));
 
+			@SuppressWarnings("resource")
 			JarOutputStream jos = new JarOutputStream(new FileOutputStream(output));
 			Enumeration<JarEntry> entries = jarFile.entries();
 
@@ -189,6 +197,7 @@ public class ZipUtils {
 				if (containsAny(entry.getName(), security)) {
 					continue;
 				}
+				@SuppressWarnings("resource")
 				InputStream is = jarFile.getInputStream(entry);
 
 				//jos.putNextEntry(entry);
