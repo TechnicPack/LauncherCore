@@ -275,8 +275,7 @@ public class InstalledPack {
 		return cached;
 	}
 
-	@SuppressWarnings("static-method")
-	private boolean loadCachedImage(AtomicReference<BufferedImage> image, File file, String url, String md5) {
+	private static boolean loadCachedImage(AtomicReference<BufferedImage> image, File file, String url, String md5) {
 		try {
 			if (file.exists() && (url.isEmpty() || md5.isEmpty() || MD5Utils.getMD5(file).equalsIgnoreCase(md5))) {
 				BufferedImage newImage;
@@ -332,8 +331,7 @@ public class InstalledPack {
 		return this.name;
 	}
 
-	@SuppressWarnings("static-method")
-	private BufferedImage loadBackup(String backup) {
+	private static BufferedImage loadBackup(String backup) {
 		try {
 			return ImageIO.read(ResourceUtils.getResourceAsStream(backup));
 		} catch (IOException e) {

@@ -20,17 +20,19 @@
 package net.technicpack.launchercore.auth;
 
 public class RefreshRequest extends Response {
-	@SuppressWarnings("unused")
 	private String accessToken;
-	@SuppressWarnings("unused")
 	private String clientToken;
-
-	public RefreshRequest() {
-
-	}
 
 	public RefreshRequest(String accessToken, String clientToken) {
 		this.accessToken = accessToken;
 		this.clientToken = clientToken;
+	}
+
+	public String getAccessToken() {
+		return this.accessToken;
+	}
+
+	public String getClientToken() {
+		return this.clientToken;
 	}
 }

@@ -9,8 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class UserModel {
-	@SuppressWarnings("unused")
-	private static UserModel mInstance = null;
 
 	private User mCurrentUser = null;
 	private List<IAuthListener> mAuthListeners = new LinkedList<>();

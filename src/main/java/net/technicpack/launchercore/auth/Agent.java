@@ -20,7 +20,6 @@
 package net.technicpack.launchercore.auth;
 
 public class Agent {
-	
 	private String name;
 	private String version;
 

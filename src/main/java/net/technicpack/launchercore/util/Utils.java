@@ -167,7 +167,6 @@ public class Utils {
 			return true;
 		} catch (IOException e) {
 			return false;
-		} finally {
 		}
 	}
 }

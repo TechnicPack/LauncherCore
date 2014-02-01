@@ -19,17 +19,12 @@
 
 package net.technicpack.launchercore.launch;
 
-import java.util.List;
-
 public class MinecraftProcess {
-	@SuppressWarnings("unused")
-	private final List<String> commands;
 	private final Process process;
 	private MinecraftExitListener exitListener;
 	private final ProcessMonitorThread monitorThread;
 
-	public MinecraftProcess(List<String> commands, Process process) {
-		this.commands = commands;
+	public MinecraftProcess(Process process) {
 		this.process = process;
 		this.monitorThread = new ProcessMonitorThread(this);
 		this.monitorThread.start();

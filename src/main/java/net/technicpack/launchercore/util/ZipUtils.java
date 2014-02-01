@@ -184,9 +184,6 @@ public class ZipUtils {
 		@SuppressWarnings("resource")
 		JarFile jarFile = new JarFile(minecraft);
 		try {
-			String fileName = jarFile.getName();
-			@SuppressWarnings("unused")
-			String fileNameLastPart = fileName.substring(fileName.lastIndexOf(File.separator));
 
 			@SuppressWarnings("resource")
 			JarOutputStream jos = new JarOutputStream(new FileOutputStream(output));

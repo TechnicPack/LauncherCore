@@ -36,12 +36,12 @@ public class Download implements Runnable {
 
 	private URL url;
 	private long size = -1;
-	private long downloaded = 0;
+	long downloaded = 0;
 	private String outPath;
 	private String name;
-	private DownloadListener listener;
+	DownloadListener listener;
 	private Result result = Result.FAILURE;
-	private File outFile = null;
+	File outFile = null;
 	private Exception exception = null;
 
 	public Download(String url, String name, String outPath) throws MalformedURLException {
@@ -151,7 +151,7 @@ public class Download implements Runnable {
 		return new BufferedInputStream(is.get());
 	}
 
-	private void stateChanged() {
+	void stateChanged() {
 		if (this.listener != null)
 			this.listener.stateChanged(this.name, getProgress());
 	}
@@ -203,7 +203,6 @@ public class Download implements Runnable {
 			this.downloadThread = downloadThread;
 		}
 
-		@SuppressWarnings("synthetic-access")
 		@Override
 		public void run() {
 			while (!this.isInterrupted()) {

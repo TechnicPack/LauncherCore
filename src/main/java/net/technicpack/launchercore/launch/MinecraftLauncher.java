@@ -68,7 +68,7 @@ public class MinecraftLauncher {
 			System.out.println("Failed to record event");
 		}
 		Process process = new ProcessBuilder(commands).directory(this.pack.getInstalledDirectory()).redirectErrorStream(true).start();
-		MinecraftProcess mcProcess = new MinecraftProcess(commands, process);
+		MinecraftProcess mcProcess = new MinecraftProcess(process);
 		if (exitListener != null) mcProcess.setExitListener(exitListener);
 		return mcProcess;
 	}

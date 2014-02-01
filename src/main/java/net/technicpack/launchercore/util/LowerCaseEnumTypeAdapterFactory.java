@@ -49,13 +49,12 @@ public class LowerCaseEnumTypeAdapterFactory implements TypeAdapterFactory {
 		}
 
 		return new TypeAdapter<T>() {
-			@SuppressWarnings("synthetic-access")
 			@Override
 			public void write(JsonWriter out, T value) throws IOException {
 				if (value == null)
 					out.nullValue();
 				else
-					out.value(LowerCaseEnumTypeAdapterFactory.this.toLowercase(value));
+					out.value(LowerCaseEnumTypeAdapterFactory.toLowercase(value));
 			}
 
 			@Override
@@ -69,8 +68,7 @@ public class LowerCaseEnumTypeAdapterFactory implements TypeAdapterFactory {
 		};
 	}
 
-	@SuppressWarnings("static-method")
-	private String toLowercase(Object o) {
+	static String toLowercase(Object o) {
 		return o.toString().toLowerCase(Locale.US);
 	}
 }

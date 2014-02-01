@@ -132,15 +132,6 @@ public class ModpackInstaller {
 		this.installedPack.initDirectories();
 
 		File versionFile = new File(this.installedPack.getBinDir(), "version.json");
-		File modpackJar = new File(this.installedPack.getBinDir(), "modpack.jar");
-
-		@SuppressWarnings("unused")
-		boolean didExtract = false;
-
-		if (modpackJar.exists()) {
-			didExtract = ZipUtils.extractFile(modpackJar, this.installedPack.getBinDir(), "version.json");
-		}
-
 		if (!versionFile.exists()) {
 			throw new PackNotAvailableOfflineException(this.installedPack.getDisplayName());
 		}

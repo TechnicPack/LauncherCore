@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.logging.Level;
 
 public class AvailablePackList implements IAuthListener, PackRefreshListener {
-	private IPackStore mPackStore;
-	private Collection<String> mForcedSolderPacks = new ArrayList<>();
+	IPackStore mPackStore;
+	Collection<String> mForcedSolderPacks = new ArrayList<>();
 	private List<IPackListener> mPackListeners = new LinkedList<>();
 
 	public AvailablePackList(IPackStore packStore) {
@@ -157,7 +157,6 @@ public class AvailablePackList implements IAuthListener, PackRefreshListener {
 		}
 
 		Thread thread = new Thread("Technic Solder Defaults") {
-			@SuppressWarnings("synthetic-access")
 			@Override
 			public void run() {
 				int index = 0;
@@ -209,7 +208,6 @@ public class AvailablePackList implements IAuthListener, PackRefreshListener {
 
 		thread = new Thread("Forced Solder Thread") {
 
-			@SuppressWarnings("synthetic-access")
 			@Override
 			public void run() {
 				for (String solder : AvailablePackList.this.mForcedSolderPacks) {

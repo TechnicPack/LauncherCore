@@ -20,13 +20,9 @@
 package net.technicpack.launchercore.auth;
 
 public class AuthRequest {
-	@SuppressWarnings("unused")
 	private Agent agent;
-	@SuppressWarnings("unused")
 	private String username;
-	@SuppressWarnings("unused")
 	private String password;
-	@SuppressWarnings("unused")
 	private String clientToken;
 
 	public AuthRequest(Agent agent, String username, String password, String clientToken) {
@@ -34,5 +30,21 @@ public class AuthRequest {
 		this.username = username;
 		this.password = password;
 		this.clientToken = clientToken;
+	}
+	
+	public Agent getAgent(){
+		return this.agent;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public String getClientToken() {
+		return this.clientToken;
 	}
 }
