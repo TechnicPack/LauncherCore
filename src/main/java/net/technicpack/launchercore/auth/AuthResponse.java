@@ -29,23 +29,23 @@ public class AuthResponse extends Response {
 	private User user;
 
 	public String getAccessToken() {
-		return accessToken;
+		return this.accessToken;
 	}
 
 	public String getClientToken() {
-		return clientToken;
+		return this.clientToken;
 	}
 
 	public Profile[] getAvailableProfiles() {
-		return availableProfiles;
+		return this.availableProfiles;
 	}
 
 	public Profile getSelectedProfile() {
-		return selectedProfile;
+		return this.selectedProfile;
 	}
 
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 
 	@Override
@@ -54,9 +54,8 @@ public class AuthResponse extends Response {
 
 		if (this.availableProfiles != null && this.availableProfiles.length == 0 && (error == null || error.isEmpty())) {
 			return "No Minecraft License";
-		} else {
-			return error;
 		}
+		return error;
 	}
 
 	@Override
@@ -65,18 +64,17 @@ public class AuthResponse extends Response {
 
 		if (this.availableProfiles != null && this.availableProfiles.length == 0 && (message == null || message.isEmpty())) {
 			return "This Mojang account has no purchased copies of Minecraft attached.";
-		} else {
-			return message;
 		}
+		return message;
 	}
 
 	@Override
 	public String toString() {
 		return "AuthResponse{" +
-				"accessToken='" + accessToken + '\'' +
-				", clientToken='" + clientToken + '\'' +
-				", availableProfiles=" + Arrays.toString(availableProfiles) +
-				", selectedProfile=" + selectedProfile +
+				"accessToken='" + this.accessToken + '\'' +
+				", clientToken='" + this.clientToken + '\'' +
+				", availableProfiles=" + Arrays.toString(this.availableProfiles) +
+				", selectedProfile=" + this.selectedProfile +
 				'}';
 	}
 }
