@@ -14,7 +14,7 @@ public class SkinRepository {
 
 	private ISkinStore mSkinStore;
 	private ISkinMapper mSkinMapper;
-	private List<ISkinListener> mListeners = new LinkedList<ISkinListener>();
+	private List<ISkinListener> mListeners = new LinkedList<>();
 
 	public SkinRepository(ISkinMapper mapper, ISkinStore skinStore) {
 		this.mSkinMapper = mapper;
@@ -26,19 +26,19 @@ public class SkinRepository {
 	}
 
 	protected void triggerFaceReady(User user) {
-		for(ISkinListener listener : mListeners) {
+		for(ISkinListener listener : this.mListeners) {
 			listener.faceReady(user);
 		}
 	}
 
 	protected void triggerSkinReady(User user) {
-		for(ISkinListener listener : mListeners) {
+		for(ISkinListener listener : this.mListeners) {
 			listener.skinReady(user);
 		}
 	}
 
 	public BufferedImage getFaceImage(User user) {
-		String expectedFilename = mSkinMapper.getFaceFilename(user);
+		String expectedFilename = this.mSkinMapper.getFaceFilename(user);
 		File asset = new File(expectedFilename);
 
 		BufferedImage output = null;
@@ -65,14 +65,14 @@ public class SkinRepository {
 				}
 			};
 			faceThread.start();
-			return mSkinMapper.getDefaultFaceImage();
+			return this.mSkinMapper.getDefaultFaceImage();
 		}
 
 		return output;
 	}
 
 	public BufferedImage getSkinImage(User user) {
-		String expectedFilename = mSkinMapper.getSkinFilename(user);
+		String expectedFilename = this.mSkinMapper.getSkinFilename(user);
 		File asset = new File(expectedFilename);
 
 		BufferedImage output = null;
@@ -99,18 +99,18 @@ public class SkinRepository {
 				}
 			};
 			skinThread.start();
-			return mSkinMapper.getDefaultSkinImage();
+			return this.mSkinMapper.getDefaultSkinImage();
 		}
 
 		return output;
 	}
 
 	public BufferedImage getDefaultFace() {
-		return mSkinMapper.getDefaultFaceImage();
+		return this.mSkinMapper.getDefaultFaceImage();
 	}
 
 	public BufferedImage getDefaultSkin() {
-		return mSkinMapper.getDefaultSkinImage();
+		return this.mSkinMapper.getDefaultSkinImage();
 	}
 
 	protected void downloadFaceImage(User user) {
