@@ -33,8 +33,7 @@ public class ResourceUtils {
 		File file = new File(".\\src\\main\\resources\\" + path);
 		if (file.exists())
 			return file;
-		else
-			return null;
+		return null;
 	}
 
 	public static ImageIcon getIcon(String iconName) {
@@ -50,7 +49,8 @@ public class ResourceUtils {
 		}
 	}
 
-	public static InputStream getResourceAsStream(String path) {
+	public static InputStream getResourceAsStream(String path2) {
+		String path = path2;
 		InputStream stream = ResourceUtils.class.getResourceAsStream(path);
 		String[] split = path.split("/");
 		path = split[split.length - 1];
