@@ -59,7 +59,6 @@ public class Download implements Runnable {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void run() {
 		@SuppressWarnings("resource")
 		ReadableByteChannel rbc = null;
@@ -117,8 +116,9 @@ public class Download implements Runnable {
 		}
 	}
 
+	@SuppressWarnings("static-method")
 	protected InputStream getConnectionInputStream(final URLConnection urlconnection) throws DownloadException {
-		final AtomicReference<InputStream> is = new AtomicReference<InputStream>();
+		final AtomicReference<InputStream> is = new AtomicReference<>();
 
 		for (int j = 0; (j < 3) && (is.get() == null); j++) {
 			StreamThread stream = new StreamThread(urlconnection, is);
