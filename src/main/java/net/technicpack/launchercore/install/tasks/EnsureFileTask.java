@@ -25,7 +25,7 @@ public class EnsureFileTask implements IInstallTask {
 		this(fileLocation, zipExtractLocation, sourceUrl, fileLocation.getName(), md5, rules);
 	}
 
-	public EnsureFileTask(File fileLocation, File zipExtractLocation, String sourceUrl, String friendlyFileName, String md5, ExtractRules rules) {
+	public EnsureFileTask(File fileLocation, File zipExtractLocation, String sourceUrl, String friendlyFileName, String md5, @SuppressWarnings("unused") /* Cannot fix without having duplicate constructors */ ExtractRules rules) {
 		this.cacheLocation = fileLocation;
 		this.zipExtractLocation = zipExtractLocation;
 		this.sourceUrl = sourceUrl;
