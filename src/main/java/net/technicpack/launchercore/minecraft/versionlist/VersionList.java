@@ -27,10 +27,10 @@ public class VersionList {
 	private LatestEntry latest;
 
 	public List<VersionEntry> getVersions() {
-		return versions;
+		return this.versions;
 	}
 
 	public LatestEntry getLatest() {
-		return latest;
+		return this.latest;
 	}
 }
