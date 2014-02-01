@@ -41,12 +41,12 @@ public class CacheDeleteException extends IOException {
 	}
 
 	@Override
-	public Throwable getCause() {
+	public synchronized Throwable getCause() {
 		return this.cause;
 	}
 
 	@Override
 	public String getMessage() {
-		return "An error occurred while attempting to delete '"+filePath+"' from the cache:";
+		return "An error occurred while attempting to delete '"+this.filePath+"' from the cache:";
 	}
 }
