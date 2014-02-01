@@ -19,7 +19,7 @@ public abstract class ListenerTask implements IInstallTask, DownloadListener {
 	}
 
 	@Override
-	public void runTask(InstallTasksQueue queue) throws IOException {
+	public void runTask(@SuppressWarnings("hiding") InstallTasksQueue queue) throws IOException {
 		this.queue = queue;
 	}
 
