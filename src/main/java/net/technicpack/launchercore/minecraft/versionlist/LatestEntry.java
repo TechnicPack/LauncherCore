@@ -24,10 +24,10 @@ public class LatestEntry {
 	private String release;
 
 	public String getSnapshot() {
-		return snapshot;
+		return this.snapshot;
 	}
 
 	public String getRelease() {
-		return release;
+		return this.release;
 	}
 }
