@@ -69,6 +69,7 @@ public class LowerCaseEnumTypeAdapterFactory implements TypeAdapterFactory {
 		};
 	}
 
+	@SuppressWarnings("static-method")
 	private String toLowercase(Object o) {
 		return o.toString().toLowerCase(Locale.US);
 	}
