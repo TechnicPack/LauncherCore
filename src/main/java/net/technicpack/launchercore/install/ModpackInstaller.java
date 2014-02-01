@@ -38,6 +38,7 @@ import net.technicpack.launchercore.util.*;
 import org.apache.commons.io.FileUtils;
 
 import javax.swing.JOptionPane;
+
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
@@ -64,28 +65,28 @@ public class ModpackInstaller {
 		String minecraft = modpack.getMinecraft();
 
 		if (minecraft.startsWith("1.5")) {
-			queue.AddTask(new EnsureFileTask(new File(Utils.getCacheDirectory(), "fml_libs15.zip"),new File(installedPack.getInstalledDirectory(), "lib"), "http://mirror.technicpack.net/Technic/lib/fml/fml_libs15.zip"));
+			queue.AddTask(new EnsureFileTask(new File(Utils.getCacheDirectory(), "fml_libs15.zip"),new File(this.installedPack.getInstalledDirectory(), "lib"), "http://mirror.technicpack.net/Technic/lib/fml/fml_libs15.zip"));
 		} else if (minecraft.startsWith("1.4")) {
-			queue.AddTask(new EnsureFileTask(new File(Utils.getCacheDirectory(), "fml_libs.zip"),new File(installedPack.getInstalledDirectory(), "lib"), "http://mirror.technicpack.net/Technic/lib/fml/fml_libs.zip"));
+			queue.AddTask(new EnsureFileTask(new File(Utils.getCacheDirectory(), "fml_libs.zip"),new File(this.installedPack.getInstalledDirectory(), "lib"), "http://mirror.technicpack.net/Technic/lib/fml/fml_libs.zip"));
 		}
 
 		queue.RunAllTasks();
 		Version installedVersion = this.getInstalledVersion();
 
 		boolean shouldUpdate = installedVersion == null;
-		if (!shouldUpdate && !this.build.equals(installedVersion.getVersion())) {
+		if (!shouldUpdate &&  installedVersion != null && !this.build.equals(installedVersion.getVersion())) {
 			int result = JOptionPane.showConfirmDialog(component, "Would you like to update this pack?", "Update Found", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 			if (result == JOptionPane.YES_OPTION) {
 				shouldUpdate = true;
 			} else {
-				build = installedVersion.getVersion();
+				this.build = installedVersion.getVersion();
 			}
 		}
 
 		if (shouldUpdate) {
 			//If we're installing a new version of modpack, then we need to get rid of the existing version.json
-			File versionFile = new File(installedPack.getBinDir(), "version.json");
+			File versionFile = new File(this.installedPack.getBinDir(), "version.json");
 			if (versionFile.exists()) {
 				if (!versionFile.delete()) {
 					throw new CacheDeleteException(versionFile.getAbsolutePath());
@@ -95,18 +96,18 @@ public class ModpackInstaller {
 			queue.AddTask(new InstallModpackTask(this.installedPack, modpack));
 		}
 
-		queue.AddTask(new VerifyVersionFilePresentTask	(installedPack, minecraft));
-	queue.AddTask(new HandleVersionFileTask(installedPack));
+		queue.AddTask(new VerifyVersionFilePresentTask	(this.installedPack, minecraft));
+	queue.AddTask(new HandleVersionFileTask(this.installedPack));
 
 	if ((installedVersion != null && installedVersion.isLegacy()) || shouldUpdate)
 			queue.AddTask(new InstallMinecraftIfNecessaryTask(this.installedPack, minecraft));
 
 	queue.RunAllTasks();
 
-	Version versionFile = new Version(build, false);
-	versionFile.save(installedPack.getBinDir());
+	Version versionFile = new Version(this.build, false);
+	versionFile.save(this.installedPack.getBinDir());
 
-	finished = true;
+	this.finished = true;
 	return queue.getCompleteVersion();
 }
 
@@ -123,24 +124,25 @@ public class ModpackInstaller {
 	}
 
 	public boolean isFinished() {
-		return finished;
+		return this.finished;
 	}
 
 	public CompleteVersion prepareOfflinePack() throws IOException {
-		installedPack.getInstalledDirectory();
-		installedPack.initDirectories();
+		this.installedPack.getInstalledDirectory();
+		this.installedPack.initDirectories();
 
-		File versionFile = new File(installedPack.getBinDir(), "version.json");
-		File modpackJar = new File(installedPack.getBinDir(), "modpack.jar");
+		File versionFile = new File(this.installedPack.getBinDir(), "version.json");
+		File modpackJar = new File(this.installedPack.getBinDir(), "modpack.jar");
 
+		@SuppressWarnings("unused")
 		boolean didExtract = false;
 
 		if (modpackJar.exists()) {
-			didExtract = ZipUtils.extractFile(modpackJar, installedPack.getBinDir(), "version.json");
+			didExtract = ZipUtils.extractFile(modpackJar, this.installedPack.getBinDir(), "version.json");
 		}
 
 		if (!versionFile.exists()) {
-			throw new PackNotAvailableOfflineException(installedPack.getDisplayName());
+			throw new PackNotAvailableOfflineException(this.installedPack.getDisplayName());
 		}
 
 		String json = FileUtils.readFileToString(versionFile, Charset.forName("UTF-8"));

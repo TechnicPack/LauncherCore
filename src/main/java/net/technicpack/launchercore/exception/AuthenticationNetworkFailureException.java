@@ -22,6 +22,8 @@ package net.technicpack.launchercore.exception;
 import java.io.IOException;
 
 public class AuthenticationNetworkFailureException extends IOException {
+	
+	private static final long serialVersionUID = 5887385045789342851L;
 	private Throwable cause;
 
 	public AuthenticationNetworkFailureException() {
@@ -38,7 +40,7 @@ public class AuthenticationNetworkFailureException extends IOException {
 	}
 
 	@Override
-	public Throwable getCause() {
-		return cause;
+	public synchronized Throwable getCause() {
+		return this.cause;
 	}
 }

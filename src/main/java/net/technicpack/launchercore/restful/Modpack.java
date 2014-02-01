@@ -34,17 +34,17 @@ public class Modpack extends RestObject {
 	}
 
 	public Modpack(PlatformPackInfo info) {
-		minecraft = info.getMinecraft();
-		mods = new ArrayList<Mod>();
+		this.minecraft = info.getMinecraft();
+		this.mods = new ArrayList<>();
 		Mod mod = new Mod(info.getName(), info.getRecommended(), info.getUrl(), "");
-		mods.add(mod);
+		this.mods.add(mod);
 	}
 
 	public String getMinecraft() {
-		return minecraft;
+		return this.minecraft;
 	}
 
 	public List<Mod> getMods() {
-		return mods;
+		return this.mods;
 	}
 }

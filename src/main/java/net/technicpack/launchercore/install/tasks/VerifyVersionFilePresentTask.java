@@ -2,16 +2,11 @@ package net.technicpack.launchercore.install.tasks;
 
 import net.technicpack.launchercore.exception.PackNotAvailableOfflineException;
 import net.technicpack.launchercore.install.InstalledPack;
-import net.technicpack.launchercore.minecraft.CompleteVersion;
 import net.technicpack.launchercore.minecraft.TechnicConstants;
-import net.technicpack.launchercore.util.DownloadUtils;
-import net.technicpack.launchercore.util.Utils;
 import net.technicpack.launchercore.util.ZipUtils;
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 
 public class VerifyVersionFilePresentTask implements IInstallTask {
 	private InstalledPack pack;
@@ -37,6 +32,7 @@ public class VerifyVersionFilePresentTask implements IInstallTask {
 		File versionFile = new File(this.pack.getBinDir(), "version.json");
 		File modpackJar = new File(this.pack.getBinDir(), "modpack.jar");
 
+		@SuppressWarnings("unused")
 		boolean didExtract = false;
 
 		if (modpackJar.exists()) {
@@ -46,10 +42,9 @@ public class VerifyVersionFilePresentTask implements IInstallTask {
 		if (!versionFile.exists()) {
 			if (this.pack.isLocalOnly()) {
 				throw new PackNotAvailableOfflineException(this.pack.getDisplayName());
-			} else {
-				queue.AddNextTask(new DownloadFileTask(TechnicConstants.getTechnicVersionJson(this.minecraftVersion), versionFile));
-				return;
 			}
+			queue.AddNextTask(new DownloadFileTask(TechnicConstants.getTechnicVersionJson(this.minecraftVersion), versionFile));
+			return;
 		}
 	}
 }

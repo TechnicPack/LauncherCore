@@ -20,7 +20,9 @@
 package net.technicpack.launchercore.install;
 
 import com.google.gson.JsonSyntaxException;
+
 import net.technicpack.launchercore.util.Utils;
+
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -42,11 +44,11 @@ public class Version {
 	}
 
 	public boolean isLegacy() {
-		return legacy;
+		return this.legacy;
 	}
 
 	public String getVersion() {
-		return version;
+		return this.version;
 	}
 
 	public void setVersion(String version) {
@@ -76,6 +78,7 @@ public class Version {
 	}
 
 	public void save(File saveDirectory) {
+		@SuppressWarnings("hiding")
 		File version = new File(saveDirectory, "version");
 		String json = Utils.getGson().toJson(this);
 
@@ -88,6 +91,6 @@ public class Version {
 
 	@Override
 	public String toString() {
-		return version + " " + legacy;
+		return this.version + " " + this.legacy;
 	}
 }

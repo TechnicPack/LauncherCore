@@ -149,14 +149,14 @@ public class Settings {
 	@Override
 	public String toString() {
 		return "Settings{" +
-				"directory='" + directory + '\'' +
-				", memory=" + memory +
-				", buildStream='" + buildStream + '\'' +
-				", showConsole=" + showConsole +
-				", migrate=" + migrate +
-				", migrateDir='" + migrateDir + '\'' +
-				", launchAction='" + launchAction +'\'' +
-				", languageCode='" + languageCode + '\'' +
+				"directory='" + this.directory + '\'' +
+				", memory=" + this.memory +
+				", buildStream='" + this.buildStream + '\'' +
+				", showConsole=" + this.showConsole +
+				", migrate=" + this.migrate +
+				", migrateDir='" + this.migrateDir + '\'' +
+				", launchAction='" + this.launchAction +'\'' +
+				", languageCode='" + this.languageCode + '\'' +
 				'}';
 	}
 }

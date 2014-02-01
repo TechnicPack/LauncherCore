@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ExtractRules {
-	private List<String> exclude = new ArrayList<String>();
+	private List<String> exclude = new ArrayList<>();
 
 	public ExtractRules() {
 
@@ -37,7 +37,7 @@ public class ExtractRules {
 	}
 
 	public List<String> getExclude() {
-		return exclude;
+		return this.exclude;
 	}
 
 	public boolean shouldExtract(String path) {

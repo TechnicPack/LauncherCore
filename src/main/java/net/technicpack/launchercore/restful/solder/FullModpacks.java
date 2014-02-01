@@ -29,10 +29,10 @@ public class FullModpacks extends RestObject {
 	private String mirror_url;
 
 	public LinkedHashMap<String, SolderPackInfo> getModpacks() {
-		return modpacks;
+		return this.modpacks;
 	}
 
 	public String getMirrorUrl() {
-		return mirror_url;
+		return this.mirror_url;
 	}
 }

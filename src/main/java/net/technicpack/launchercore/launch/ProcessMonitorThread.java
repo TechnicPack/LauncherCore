@@ -19,13 +19,9 @@
 
 package net.technicpack.launchercore.launch;
 
-import net.technicpack.launchercore.util.Utils;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ProcessMonitorThread extends Thread {
 
@@ -36,6 +32,8 @@ public class ProcessMonitorThread extends Thread {
 		this.process = process;
 	}
 
+	@Override
+	@SuppressWarnings("finally")
 	public void run() {
 		InputStreamReader reader = new InputStreamReader(this.process.getProcess().getInputStream());
 		BufferedReader buf = new BufferedReader(reader);
@@ -56,7 +54,7 @@ public class ProcessMonitorThread extends Thread {
 				} finally
                 {
                     try {
-                        process.getProcess().waitFor();
+                        this.process.getProcess().waitFor();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -65,8 +63,8 @@ public class ProcessMonitorThread extends Thread {
 			}
 		}
 
-		if (process.getExitListener() != null) {
-			process.getExitListener().onMinecraftExit(process);
+		if (this.process.getExitListener() != null) {
+			this.process.getExitListener().onMinecraftExit(this.process);
 		}
 	}
 }

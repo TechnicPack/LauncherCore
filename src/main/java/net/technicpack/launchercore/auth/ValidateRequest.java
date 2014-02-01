@@ -20,6 +20,7 @@
 package net.technicpack.launchercore.auth;
 
 public class ValidateRequest {
+	@SuppressWarnings("unused")
 	private String accessToken;
 
 	public ValidateRequest(String accessToken) {

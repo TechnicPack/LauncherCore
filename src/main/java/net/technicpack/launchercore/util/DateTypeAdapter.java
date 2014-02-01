@@ -45,6 +45,7 @@ public class DateTypeAdapter
 		this.iso8601Format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 	}
 
+	@Override
 	public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 		if (!(json instanceof JsonPrimitive)) {
 			throw new JsonParseException("The date should be a string value");
@@ -78,6 +79,7 @@ public class DateTypeAdapter
 		}
 	}
 
+	@Override
 	public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
 		synchronized (this.enUsFormat) {
 			return new JsonPrimitive(serializeToString(src));

@@ -37,29 +37,29 @@ public class LaunchOptions {
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public String getIconPath() {
-		return iconPath;
+		return this.iconPath;
 	}
 
 	public int getWidth() {
-		return width;
+		return this.width;
 	}
 
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 
 	public boolean getFullscreen() {
-		return fullscreen;
+		return this.fullscreen;
 	}
 
 	public void appendToCommands(List<String> commands) {
 		if (getTitle() != null) {
 			commands.add("--title");
-			commands.add(title);
+			commands.add(this.title);
 		}
 
 		if (getWidth() > -1) {
@@ -80,5 +80,36 @@ public class LaunchOptions {
 			commands.add("--icon");
 			commands.add(getIconPath());
 		}
+		
+		/*
+		 * I want to make this all optional, but couldnt find where the config is loaded in either the core or launcher
+		 * So I couldnt make a enable-beta-args.
+		 * I wanted to do that so you could test it without accepting the pull first.
+		 * Or is there a way to do that?
+		 *		
+		 * Most of this is GC stuff, but GC is a big deal.
+		 * 
+		 * I wrote some of these and found others.
+		 * 
+		 * On average, people get 30 more FPS with these (on low functioning clients)
+		 */
+		
+		// Makes the VM use agressive (the most effective) optimizations and try harder to do them
+		// HUGELY speeds up minecraft
+		commands.add("-XX:+AgressiveOpts");
+		
+		// Makes minecraft utilize all of the cores
+		commands.add("-XX:ParallelGCThreads=" + Runtime.getRuntime().availableProcessors());
+	
+		// Changes the passes it takes for an item to be moved to old
+		// This value seems to work well for MC
+		commands.add("-XX:MaxTenuringThreshold=15");
+		
+		// Another garbage collector related param
+		commands.add("-XX:+UseBiasedLocking");
+		
+		// 2 other forms of GC to use, seems to help
+		commands.add("-XX:+UseConcMarkSweepGC");
+		commands.add("-XX:+UseParNewGC");
 	}
 }

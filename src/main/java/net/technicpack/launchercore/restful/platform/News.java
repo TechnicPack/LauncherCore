@@ -27,6 +27,6 @@ public class News extends RestObject {
 	private List<Article> news;
 
 	public List<Article> getNews() {
-		return news;
+		return this.news;
 	}
 }

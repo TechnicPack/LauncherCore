@@ -21,8 +21,8 @@ import java.util.logging.Level;
 
 public class AvailablePackList implements IAuthListener, PackRefreshListener {
 	private IPackStore mPackStore;
-	private Collection<String> mForcedSolderPacks = new ArrayList<String>();
-	private List<IPackListener> mPackListeners = new LinkedList<IPackListener>();
+	private Collection<String> mForcedSolderPacks = new ArrayList<>();
+	private List<IPackListener> mPackListeners = new LinkedList<>();
 
 	public AvailablePackList(IPackStore packStore) {
 		this.mPackStore = packStore;
@@ -30,7 +30,7 @@ public class AvailablePackList implements IAuthListener, PackRefreshListener {
 	}
 
 	public void addForcedSolderPack(String solderLocation) {
-		mForcedSolderPacks.add(solderLocation);
+		this.mForcedSolderPacks.add(solderLocation);
 	}
 
 	@Override
@@ -43,15 +43,15 @@ public class AvailablePackList implements IAuthListener, PackRefreshListener {
 	}
 
 	public void addPackListener(IPackListener listener) {
-		mPackListeners.add(listener);
+		this.mPackListeners.add(listener);
 	}
 
 	public void removePackListener(IPackListener listener) {
-		mPackListeners.remove(listener);
+		this.mPackListeners.remove(listener);
 	}
 
 	public void triggerUpdateListeners(InstalledPack pack) {
-		for (IPackListener listener : mPackListeners) {
+		for (IPackListener listener : this.mPackListeners) {
 			listener.updatePack(pack);
 		}
 	}
@@ -69,56 +69,56 @@ public class AvailablePackList implements IAuthListener, PackRefreshListener {
 	}
 
 	public void add(InstalledPack pack) {
-		mPackStore.add(pack);
-		mPackStore.save();
+		this.mPackStore.add(pack);
+		this.mPackStore.save();
 		pack.setRefreshListener(this);
 		triggerUpdateListeners(pack);
 	}
 
 	public void put(InstalledPack pack) {
-		mPackStore.put(pack);
-		mPackStore.save();
+		this.mPackStore.put(pack);
+		this.mPackStore.save();
 		pack.setRefreshListener(this);
 		triggerUpdateListeners(pack);
 	}
 
 	public void remove(InstalledPack pack) {
-		mPackStore.remove(pack.getName());
-		mPackStore.save();
+		this.mPackStore.remove(pack.getName());
+		this.mPackStore.save();
 	}
 
 	public InstalledPack getOffsetPack(int offset) {
-		int index = mPackStore.getSelectedIndex();
+		int index = this.mPackStore.getSelectedIndex();
 
 		index += offset;
 
-		while (index < 0) { index += mPackStore.getInstalledPacks().size(); }
-		while (index >= mPackStore.getInstalledPacks().size()) { index -= mPackStore.getInstalledPacks().size(); }
+		while (index < 0) { index += this.mPackStore.getInstalledPacks().size(); }
+		while (index >= this.mPackStore.getInstalledPacks().size()) { index -= this.mPackStore.getInstalledPacks().size(); }
 
-		return mPackStore.getInstalledPacks().get(mPackStore.getPackNames().get(index));
+		return this.mPackStore.getInstalledPacks().get(this.mPackStore.getPackNames().get(index));
 	}
 
 	public void setPack(InstalledPack pack) {
 
-		int index = mPackStore.getPackNames().indexOf(pack.getName());
+		int index = this.mPackStore.getPackNames().indexOf(pack.getName());
 
 		if (index >= 0)
 		{
-			mPackStore.setSelectedIndex(index);
-			mPackStore.save();
+			this.mPackStore.setSelectedIndex(index);
+			this.mPackStore.save();
 		}
 	}
 
 	public void save() {
-		mPackStore.save();
+		this.mPackStore.save();
 	}
 
 	public void reloadAllPacks(User user) {
 		final User threadUser = user;
 		final AvailablePackList packList = this;
 
-		for (final String packName : mPackStore.getPackNames()) {
-			final InstalledPack pack = mPackStore.getInstalledPacks().get(packName);
+		for (final String packName : this.mPackStore.getPackNames()) {
+			final InstalledPack pack = this.mPackStore.getInstalledPacks().get(packName);
 			if (pack.isPlatform()) {
 				Thread thread = new Thread(pack.getName() + " Info Loading Thread") {
 					@Override
@@ -157,6 +157,7 @@ public class AvailablePackList implements IAuthListener, PackRefreshListener {
 		}
 
 		Thread thread = new Thread("Technic Solder Defaults") {
+			@SuppressWarnings("synthetic-access")
 			@Override
 			public void run() {
 				int index = 0;
@@ -169,15 +170,15 @@ public class AvailablePackList implements IAuthListener, PackRefreshListener {
 						info.setSolder(solder);
 
 						InstalledPack pack = null;
-						if (mPackStore.getInstalledPacks().containsKey(name)) {
-							pack = mPackStore.getInstalledPacks().get(info.getName());
+						if (AvailablePackList.this.mPackStore.getInstalledPacks().containsKey(name)) {
+							pack = AvailablePackList.this.mPackStore.getInstalledPacks().get(info.getName());
 							pack.setRefreshListener(packList);
 							pack.setInfo(info);
 						} else {
 							pack = new InstalledPack(name, false);
 							pack.setRefreshListener(packList);
 							pack.setInfo(info);
-							mPackStore.add(pack);
+							AvailablePackList.this.mPackStore.add(pack);
 						}
 
 						final InstalledPack deferredPack = pack;
@@ -189,15 +190,15 @@ public class AvailablePackList implements IAuthListener, PackRefreshListener {
 							}
 						});
 
-						mPackStore.reorder(index, name);
+						AvailablePackList.this.mPackStore.reorder(index, name);
 						index++;
 					}
 				} catch (RestfulAPIException e) {
 					Utils.getLogger().log(Level.WARNING, "Unable to load technic modpacks", e);
 
-					for (String packName : mPackStore.getPackNames())
+					for (String packName : AvailablePackList.this.mPackStore.getPackNames())
 					{
-						InstalledPack pack = mPackStore.getInstalledPacks().get(packName);
+						InstalledPack pack = AvailablePackList.this.mPackStore.getInstalledPacks().get(packName);
 						if (!pack.isPlatform() && pack.getInfo() == null && pack.getName() != null)
 							pack.setLocalOnly();
 					}
@@ -208,9 +209,10 @@ public class AvailablePackList implements IAuthListener, PackRefreshListener {
 
 		thread = new Thread("Forced Solder Thread") {
 
+			@SuppressWarnings("synthetic-access")
 			@Override
 			public void run() {
-				for (String solder : mForcedSolderPacks) {
+				for (String solder : AvailablePackList.this.mForcedSolderPacks) {
 					try {
 						SolderPackInfo info = SolderPackInfo.getSolderPackInfo(solder, threadUser);
 						if (info == null) {
@@ -222,14 +224,14 @@ public class AvailablePackList implements IAuthListener, PackRefreshListener {
 						info.getBackground();
 
 						InstalledPack pack = null;
-						if (mPackStore.getInstalledPacks().containsKey(info.getName())) {
-							pack = mPackStore.getInstalledPacks().get(info.getName());
+						if (AvailablePackList.this.mPackStore.getInstalledPacks().containsKey(info.getName())) {
+							pack = AvailablePackList.this.mPackStore.getInstalledPacks().get(info.getName());
 							pack.setInfo(info);
 						} else {
 							pack = new InstalledPack(info.getName(), true);
 							pack.setRefreshListener(packList);
 							pack.setInfo(info);
-							mPackStore.add(pack);
+							AvailablePackList.this.mPackStore.add(pack);
 						}
 
 						final InstalledPack deferredPack = pack;

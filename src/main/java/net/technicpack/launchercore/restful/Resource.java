@@ -34,10 +34,10 @@ public class Resource {
 	}
 
 	public String getUrl() {
-		return url;
+		return this.url;
 	}
 
 	public String getMd5() {
-		return md5;
+		return this.md5;
 	}
 }

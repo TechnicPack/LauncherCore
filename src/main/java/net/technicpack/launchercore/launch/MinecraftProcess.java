@@ -22,6 +22,7 @@ package net.technicpack.launchercore.launch;
 import java.util.List;
 
 public class MinecraftProcess {
+	@SuppressWarnings("unused")
 	private final List<String> commands;
 	private final Process process;
 	private MinecraftExitListener exitListener;
@@ -35,7 +36,7 @@ public class MinecraftProcess {
 	}
 
 	public MinecraftExitListener getExitListener() {
-		return exitListener;
+		return this.exitListener;
 	}
 
 	public void setExitListener(MinecraftExitListener exitListener) {
@@ -43,6 +44,6 @@ public class MinecraftProcess {
 	}
 
 	public Process getProcess() {
-		return process;
+		return this.process;
 	}
 }
