@@ -50,70 +50,70 @@ public class PlatformPackInfo extends RestObject implements PackInfo {
 
 	@Override
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	@Override
 	public String getDisplayName() {
-		return displayName;
+		return this.displayName;
 	}
 
 	@Override
 	public String getUrl() {
-		return url;
+		return this.url;
 	}
 
 	@Override
 	public Resource getIcon() {
-		return icon;
+		return this.icon;
 	}
 
 	@Override
 	public Resource getBackground() {
-		return background;
+		return this.background;
 	}
 
 	@Override
 	public Resource getLogo() {
-		return logo;
+		return this.logo;
 	}
 
 	@Override
 	public String getRecommended() {
-		return version;
+		return this.version;
 	}
 
 	@Override
 	public String getLatest() {
-		return version;
+		return this.version;
 	}
 
 	@Override
 	public boolean shouldForceDirectory() {
-		return forceDir;
+		return this.forceDir;
 	}
 
 	@Override
 	public List<String> getBuilds() {
-		List<String> builds = new ArrayList<String>();
-		builds.add(version);
+		List<String> builds = new ArrayList<>();
+		builds.add(this.version);
 		return builds;
 	}
 
 	public String getMinecraft() {
-		return minecraft;
+		return this.minecraft;
 	}
 
 	public String getForge() {
-		return forge;
+		return this.forge;
 	}
 
 	public String getSolder() {
-		return solder;
+		return this.solder;
 	}
 
 	public boolean hasSolder() {
-		return solder != null && !solder.equals("");
+		return this.solder != null && !this.solder.equals("");
 	}
 
 	@Override
@@ -124,17 +124,17 @@ public class PlatformPackInfo extends RestObject implements PackInfo {
 	@Override
 	public String toString() {
 		return "PlatformPackInfo{" +
-				"name='" + name + '\'' +
-				", displayName='" + displayName + '\'' +
-				", url='" + url + '\'' +
-				", icon=" + icon +
-				", logo=" + logo +
-				", background=" + background +
-				", minecraft='" + minecraft + '\'' +
-				", forge='" + forge + '\'' +
-				", version='" + version + '\'' +
-				", solder='" + solder + '\'' +
-				", forceDir=" + forceDir +
+				"name='" + this.name + '\'' +
+				", displayName='" + this.displayName + '\'' +
+				", url='" + this.url + '\'' +
+				", icon=" + this.icon +
+				", logo=" + this.logo +
+				", background=" + this.background +
+				", minecraft='" + this.minecraft + '\'' +
+				", forge='" + this.forge + '\'' +
+				", version='" + this.version + '\'' +
+				", solder='" + this.solder + '\'' +
+				", forceDir=" + this.forceDir +
 				'}';
 	}
 
