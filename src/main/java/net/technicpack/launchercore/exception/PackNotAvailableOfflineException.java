@@ -38,11 +38,11 @@ public class PackNotAvailableOfflineException extends IOException {
 
 	@Override
 	public String getMessage() {
-		return "The modpack " + packDisplayName + " does not appear to be installed or is corrupt, and is not available for Offline Play.";
+		return "The modpack " + this.packDisplayName + " does not appear to be installed or is corrupt, and is not available for Offline Play.";
 	}
 
 	@Override
-	public Throwable getCause() {
-		return cause;
+	public synchronized Throwable getCause() {
+		return this.cause;
 	}
 }
