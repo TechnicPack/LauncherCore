@@ -25,4 +25,8 @@ public class ValidateRequest {
 	public ValidateRequest(String accessToken) {
 		this.accessToken = accessToken;
 	}
+
+	public String getAccessToken() {
+		return this.accessToken;
+	}
 }

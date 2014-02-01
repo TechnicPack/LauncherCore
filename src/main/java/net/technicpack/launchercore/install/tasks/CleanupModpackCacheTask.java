@@ -8,7 +8,6 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class CleanupModpackCacheTask implements IInstallTask {
@@ -38,8 +37,8 @@ public class CleanupModpackCacheTask implements IInstallTask {
 			return;
 		}
 
-		Set<String> keepFiles = new HashSet<String>(modpack.getMods().size() + 1);
-		for (Mod mod : modpack.getMods()) {
+		Set<String> keepFiles = new HashSet<>(this.modpack.getMods().size() + 1);
+		for (Mod mod : this.modpack.getMods()) {
 			keepFiles.add(mod.getName() + "-" + mod.getVersion() + ".zip");
 		}
 		keepFiles.add("minecraft.jar");

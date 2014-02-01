@@ -22,6 +22,8 @@ package net.technicpack.launchercore.exception;
 import java.io.IOException;
 
 public class CacheDeleteException extends IOException {
+
+	private static final long serialVersionUID = 6462027370292375448L;
 	private Throwable cause;
 	String filePath;
 
@@ -39,12 +41,12 @@ public class CacheDeleteException extends IOException {
 	}
 
 	@Override
-	public Throwable getCause() {
+	public synchronized Throwable getCause() {
 		return this.cause;
 	}
 
 	@Override
 	public String getMessage() {
-		return "An error occurred while attempting to delete '"+filePath+"' from the cache:";
+		return "An error occurred while attempting to delete '"+this.filePath+"' from the cache:";
 	}
 }

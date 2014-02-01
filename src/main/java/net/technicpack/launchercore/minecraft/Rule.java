@@ -30,7 +30,7 @@ public class Rule {
 			return null;
 		}
 
-		return action;
+		return this.action;
 	}
 
 	public static enum Action {

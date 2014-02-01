@@ -71,7 +71,7 @@ public class HandleVersionFileTask implements IInstallTask {
 			queue.AddTask(new EnsureFileTask(cache, extractDirectory, url, md5, library.getExtract()));
 		}
 
-		queue.AddTask(new GetAssetsIndexTask(this.pack));
+		queue.AddTask(new GetAssetsIndexTask());
 		queue.setCompleteVersion(version);
 	}
 }

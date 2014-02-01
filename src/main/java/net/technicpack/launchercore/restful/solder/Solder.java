@@ -46,14 +46,14 @@ public class Solder extends RestObject {
 	}
 
 	public String getUrl() {
-		return url;
+		return this.url;
 	}
 
 	public Map<String, String> getModpacks() {
-		return modpacks;
+		return this.modpacks;
 	}
 
 	public String getMirrorUrl() {
-		return mirror_url;
+		return this.mirror_url;
 	}
 }

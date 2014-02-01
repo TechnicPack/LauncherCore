@@ -40,12 +40,12 @@ public class CompleteVersion implements Version {
 
 	@Override
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	@Override
 	public ReleaseType getType() {
-		return type;
+		return this.type;
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class CompleteVersion implements Version {
 
 	@Override
 	public Date getUpdatedTime() {
-		return time;
+		return this.time;
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class CompleteVersion implements Version {
 
 	@Override
 	public Date getReleaseTime() {
-		return releaseTime;
+		return this.releaseTime;
 	}
 
 	@Override
@@ -74,16 +74,16 @@ public class CompleteVersion implements Version {
 	}
 
 	public String getMinecraftArguments() {
-		return minecraftArguments;
+		return this.minecraftArguments;
 	}
 
 	public List<Library> getLibraries() {
-		return libraries;
+		return this.libraries;
 	}
 
 	public List<Library> getLibrariesForOS() {
-		List<Library> libraryList = new ArrayList<Library>(libraries.size());
-		for (Library library : libraries) {
+		List<Library> libraryList = new ArrayList<>(this.libraries.size());
+		for (Library library : this.libraries) {
 			if (library.isForCurrentOS()) {
 				libraryList.add(library);
 			}
@@ -92,27 +92,27 @@ public class CompleteVersion implements Version {
 	}
 
 	public String getMainClass() {
-		return mainClass;
+		return this.mainClass;
 	}
 
 	public int getMinimumLauncherVersion() {
-		return minimumLauncherVersion;
+		return this.minimumLauncherVersion;
 	}
 
 	public String getIncompatibilityReason() {
-		return incompatibilityReason;
+		return this.incompatibilityReason;
 	}
 
 	public List<Rule> getRules() {
-		return rules;
+		return this.rules;
 	}
 
 	public String getAssetsKey() {
-		return assets;
+		return this.assets;
 	}
 
 	public boolean getAreAssetsVirtual() {
-		return areAssetsVirtual;
+		return this.areAssetsVirtual;
 	}
 
 	public void setAreAssetsVirtual(boolean areAssetsVirtual) {
@@ -122,16 +122,16 @@ public class CompleteVersion implements Version {
 	@Override
 	public String toString() {
 		return "CompleteVersion{" +
-				"id='" + id + '\'' +
-				", time=" + time +
-				", releaseTime=" + releaseTime +
-				", type=" + type +
-				", minecraftArguments='" + minecraftArguments + '\'' +
-				", libraries=" + libraries +
-				", mainClass='" + mainClass + '\'' +
-				", minimumLauncherVersion=" + minimumLauncherVersion +
-				", incompatibilityReason='" + incompatibilityReason + '\'' +
-				", rules=" + rules +
+				"id='" + this.id + '\'' +
+				", time=" + this.time +
+				", releaseTime=" + this.releaseTime +
+				", type=" + this.type +
+				", minecraftArguments='" + this.minecraftArguments + '\'' +
+				", libraries=" + this.libraries +
+				", mainClass='" + this.mainClass + '\'' +
+				", minimumLauncherVersion=" + this.minimumLauncherVersion +
+				", incompatibilityReason='" + this.incompatibilityReason + '\'' +
+				", rules=" + this.rules +
 				'}';
 	}
 }

@@ -4,16 +4,14 @@ import net.technicpack.launchercore.auth.AuthResponse;
 import net.technicpack.launchercore.auth.AuthenticationService;
 import net.technicpack.launchercore.exception.AuthenticationNetworkFailureException;
 
-import javax.swing.JOptionPane;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 public class UserModel {
-	private static UserModel mInstance = null;
 
 	private User mCurrentUser = null;
-	private List<IAuthListener> mAuthListeners = new LinkedList<IAuthListener>();
+	private List<IAuthListener> mAuthListeners = new LinkedList<>();
 	private IUserStore mUserStore;
 
 	public UserModel(IUserStore userStore) {
@@ -35,19 +33,19 @@ public class UserModel {
 	}
 
 	protected void triggerAuthListeners() {
-		for(IAuthListener listener : mAuthListeners) {
+		for(IAuthListener listener : this.mAuthListeners) {
 			listener.userChanged(this.mCurrentUser);
 		}
 	}
 
 	public AuthError AttemptLastUserRefresh() throws AuthenticationNetworkFailureException {
-		String lastUser = mUserStore.getLastUser();
+		String lastUser = this.mUserStore.getLastUser();
 
 		if (lastUser == null || lastUser.isEmpty()) {
 			return new AuthError("No cached user", "Could not log into the last logged in user, as there was no cached user to log into.");
 		}
 
-		User user = mUserStore.getUser(lastUser);
+		User user = this.mUserStore.getUser(lastUser);
 
 		if (user == null) {
 			return new AuthError("No cached user", "Could not log into the specified user, as there was no cached user to log into.");
@@ -56,46 +54,46 @@ public class UserModel {
 		return AttemptUserRefresh(user);
 	}
 
-	public AuthError AttemptUserRefresh(User user) throws AuthenticationNetworkFailureException {
+	public AuthError AttemptUserRefresh(User userparam) throws AuthenticationNetworkFailureException {
+		User user = userparam;
 		AuthResponse response = AuthenticationService.requestRefresh(user);
 		if (response.getError() != null) {
-			mUserStore.removeUser(user.getUsername());
+			this.mUserStore.removeUser(user.getUsername());
 			return new AuthError(response.getError(), response.getErrorMessage());
-		} else {
-			//Refresh user from response
-			user = new User(user.getUsername(), response);
-			mUserStore.addUser(user);
-			setCurrentUser(user);
-			return null;
 		}
+		//Refresh user from response
+		user = new User(user.getUsername(), response);
+		this.mUserStore.addUser(user);
+		setCurrentUser(user);
+		return null;
 	}
 
 	public Collection<User> getUsers() {
-		return mUserStore.getSavedUsers();
+		return this.mUserStore.getSavedUsers();
 	}
 
 	public User getLastUser() {
-		return mUserStore.getUser(mUserStore.getLastUser());
+		return this.mUserStore.getUser(this.mUserStore.getLastUser());
 	}
 
 	public User getUser(String username) {
-		return mUserStore.getUser(username);
+		return this.mUserStore.getUser(username);
 	}
 
 	public void addUser(User user) {
-		mUserStore.addUser(user);
+		this.mUserStore.addUser(user);
 	}
 
 	public void removeUser(User user) {
-		mUserStore.removeUser(user.getUsername());
+		this.mUserStore.removeUser(user.getUsername());
 	}
 
 	public void setLastUser(User user) {
-		mUserStore.setLastUser(user.getUsername());
+		this.mUserStore.setLastUser(user.getUsername());
 	}
 
 	public String getClientToken() {
-		return mUserStore.getClientToken();
+		return this.mUserStore.getClientToken();
 	}
 
 	public class AuthError {
@@ -108,11 +106,11 @@ public class UserModel {
 		}
 
 		public String getError() {
-			return mError;
+			return this.mError;
 		}
 
 		public String getErrorDescription() {
-			return mErrorDescription;
+			return this.mErrorDescription;
 		}
 	}
 }

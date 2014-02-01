@@ -22,9 +22,9 @@ package net.technicpack.launchercore.minecraft;
 import net.technicpack.launchercore.util.OperatingSystem;
 import net.technicpack.launchercore.util.Utils;
 import org.apache.commons.lang3.text.StrSubstitutor;
-
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 public class Library {
 	private static final StrSubstitutor SUBSTITUTOR = new StrSubstitutor();
@@ -36,29 +36,29 @@ public class Library {
 	private String url;
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public List<Rule> getRules() {
-		return rules;
+		return this.rules;
 	}
 
 	public Map<OperatingSystem, String> getNatives() {
-		return natives;
+		return this.natives;
 	}
 
 	public ExtractRules getExtract() {
-		return extract;
+		return this.extract;
 	}
 
 	public boolean isForCurrentOS() {
-		if (rules == null) {
+		if (this.rules == null) {
 			return true;
 		}
 
 		Rule.Action lastAction = Rule.Action.DISALLOW;
 
-		for (Rule rule : rules) {
+		for (Rule rule : this.rules) {
 			Rule.Action action = rule.getAction();
 			if (action != null) {
 				lastAction = action;
@@ -73,8 +73,12 @@ public class Library {
 	}
 
 	public String getArtifactPath(String classifier) {
-		if (this.name == null) {
+		String baseDir = getArtifactBaseDir();
+		if (this.name == null ) {
 			throw new IllegalStateException("Cannot get artifact path of empty/blank artifact");
+		}
+		if(baseDir == null || baseDir.equals("")){
+			throw new IllegalStateException("No base artifact path");
 		}
 		return String.format("%s/%s", getArtifactBaseDir(), getArtifactFilename(classifier));
 	}
@@ -83,8 +87,15 @@ public class Library {
 		if (this.name == null) {
 			throw new IllegalStateException("Cannot get artifact dir of empty/blank artifact");
 		}
-		String[] parts = this.name.split(":", 3);
-		return String.format("%s/%s/%s", parts[0].replaceAll("\\.", "/"), parts[1], parts[2]);
+		try {
+			String[] parts = this.name.split(":", 3);
+			return String.format("%s/%s/%s", parts[0].replaceAll("\\.", "/"), parts[1], parts[2]);
+		}
+		catch (Exception exc){
+			exc.printStackTrace();
+			Utils.getLogger().log(Level.SEVERE, "Failure to return artifact base dir. Returning null.");
+			return null;
+		}
 	}
 
 	public String getArtifactFilename(String classifier) {
@@ -106,7 +117,7 @@ public class Library {
 
 	public String getDownloadUrl(String path) {
 		if (this.url != null) {
-			String checkUrl = url + path;
+			String checkUrl = this.url + path;
 			if (Utils.pingHttpURL(checkUrl)) {
 				return checkUrl;
 			}

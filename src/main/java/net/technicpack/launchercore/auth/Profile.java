@@ -34,22 +34,22 @@ public class Profile {
     }
 
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public boolean isLegacy() {
-		return legacy;
+		return this.legacy;
 	}
 
 	@Override
 	public String toString() {
 		return "Profile{" +
-				"id='" + id + '\'' +
-				", name='" + name + '\'' +
+				"id='" + this.id + '\'' +
+				", name='" + this.name + '\'' +
 				'}';
 	}
 }

@@ -30,18 +30,18 @@ public class VersionEntry {
 	private ReleaseType type;
 
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	public Date getTime() {
-		return time;
+		return this.time;
 	}
 
 	public Date getReleaseTime() {
-		return releaseTime;
+		return this.releaseTime;
 	}
 
 	public ReleaseType getType() {
-		return type;
+		return this.type;
 	}
 }

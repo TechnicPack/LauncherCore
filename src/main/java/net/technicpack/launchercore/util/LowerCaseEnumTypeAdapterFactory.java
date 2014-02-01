@@ -34,25 +34,30 @@ import java.util.Map;
 
 public class LowerCaseEnumTypeAdapterFactory implements TypeAdapterFactory {
 
+	@SuppressWarnings("unchecked")
+	@Override
 	public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+		@SuppressWarnings("rawtypes")
 		Class rawType = type.getRawType();
 		if (!rawType.isEnum()) {
 			return null;
 		}
 
-		final Map<String, T> lowercaseToConstant = new HashMap<String, T>();
+		final Map<String, T> lowercaseToConstant = new HashMap<>();
 		for (Object constant : rawType.getEnumConstants()) {
 			lowercaseToConstant.put(toLowercase(constant), (T) constant);
 		}
 
 		return new TypeAdapter<T>() {
+			@Override
 			public void write(JsonWriter out, T value) throws IOException {
 				if (value == null)
 					out.nullValue();
 				else
-					out.value(LowerCaseEnumTypeAdapterFactory.this.toLowercase(value));
+					out.value(LowerCaseEnumTypeAdapterFactory.toLowercase(value));
 			}
 
+			@Override
 			public T read(JsonReader reader) throws IOException {
 				if (reader.peek() == JsonToken.NULL) {
 					reader.nextNull();
@@ -63,7 +68,7 @@ public class LowerCaseEnumTypeAdapterFactory implements TypeAdapterFactory {
 		};
 	}
 
-	private String toLowercase(Object o) {
+	static String toLowercase(Object o) {
 		return o.toString().toLowerCase(Locale.US);
 	}
 }

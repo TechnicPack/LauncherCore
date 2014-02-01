@@ -10,7 +10,7 @@ public abstract class ListenerTask implements IInstallTask, DownloadListener {
 	private InstallTasksQueue queue;
 
 	public ListenerTask() {
-		taskProgress = 0;
+		this.taskProgress = 0;
 	}
 
 	@Override
@@ -19,7 +19,7 @@ public abstract class ListenerTask implements IInstallTask, DownloadListener {
 	}
 
 	@Override
-	public void runTask(InstallTasksQueue queue) throws IOException {
+	public void runTask(@SuppressWarnings("hiding") InstallTasksQueue queue) throws IOException {
 		this.queue = queue;
 	}
 
@@ -27,6 +27,7 @@ public abstract class ListenerTask implements IInstallTask, DownloadListener {
 		this.queue = queue;
 	}
 
+	@Override
 	public void stateChanged(String fileName, float progress) {
 		this.taskProgress = progress;
 		this.queue.RefreshProgress();

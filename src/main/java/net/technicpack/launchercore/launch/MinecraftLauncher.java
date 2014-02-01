@@ -26,6 +26,7 @@ import net.technicpack.launchercore.minecraft.Library;
 import net.technicpack.launchercore.restful.PlatformConstants;
 import net.technicpack.launchercore.util.OperatingSystem;
 import net.technicpack.launchercore.util.Utils;
+
 import org.apache.commons.lang3.text.StrSubstitutor;
 
 import java.io.File;
@@ -62,51 +63,51 @@ public class MinecraftLauncher {
 			first = false;
 		}
 		System.out.println("Running " + full.toString());
-		Utils.pingHttpURL(PlatformConstants.getRunCountUrl(pack.getName()));
-		if (!Utils.sendTracking("runModpack", pack.getName(), pack.getBuild())) {
+		Utils.pingHttpURL(PlatformConstants.getRunCountUrl(this.pack.getName()));
+		if (!Utils.sendTracking("runModpack", this.pack.getName(), this.pack.getBuild())) {
 			System.out.println("Failed to record event");
 		}
-		Process process = new ProcessBuilder(commands).directory(pack.getInstalledDirectory()).redirectErrorStream(true).start();
-		MinecraftProcess mcProcess = new MinecraftProcess(commands, process);
+		Process process = new ProcessBuilder(commands).directory(this.pack.getInstalledDirectory()).redirectErrorStream(true).start();
+		MinecraftProcess mcProcess = new MinecraftProcess(process);
 		if (exitListener != null) mcProcess.setExitListener(exitListener);
 		return mcProcess;
 	}
 
 	private List<String> buildCommands(User user, LaunchOptions options) {
-		List<String> commands = new ArrayList<String>();
+		List<String> commands = new ArrayList<>();
 		commands.add(OperatingSystem.getJavaDir());
 
 		OperatingSystem operatingSystem = OperatingSystem.getOperatingSystem();
 
 		if (operatingSystem.equals(OperatingSystem.OSX)) {
 			//TODO: -Xdock:icon=<icon path>
-			commands.add("-Xdock:name=" + pack.getDisplayName());
+			commands.add("-Xdock:name=" + this.pack.getDisplayName());
 		} else if (operatingSystem.equals(OperatingSystem.WINDOWS)) {
 			// I have no idea if this helps technic or not.
 			commands.add("-XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump");
 		}
-		commands.add("-Xmx" + memory + "m");
+		commands.add("-Xmx" + this.memory + "m");
 		int permSize = 128;
-		if (memory >= 2048) {
+		if (this.memory >= 2048) {
 			permSize = 256;
 		}
 		commands.add("-XX:MaxPermSize=" + permSize + "m");
-		commands.add("-Djava.library.path=" + new File(pack.getBinDir(), "natives").getAbsolutePath());
+		commands.add("-Djava.library.path=" + new File(this.pack.getBinDir(), "natives").getAbsolutePath());
 		// Tell forge 1.5 to download from our mirror instead
 		commands.add("-Dfml.core.libraries.mirror=http://mirror.technicpack.net/Technic/lib/fml/%s");
-		commands.add("-Dminecraft.applet.TargetDirectory=" +  pack.getInstalledDirectory().getAbsolutePath());
+		commands.add("-Dminecraft.applet.TargetDirectory=" +  this.pack.getInstalledDirectory().getAbsolutePath());
 		commands.add("-cp");
 		commands.add(buildClassPath());
-		commands.add(version.getMainClass());
-		commands.addAll(Arrays.asList(getMinecraftArguments(version, pack.getInstalledDirectory(), user)));
+		commands.add(this.version.getMainClass());
+		commands.addAll(Arrays.asList(getMinecraftArguments(this.version, this.pack.getInstalledDirectory(), user)));
 		options.appendToCommands(commands);
 
 		//TODO: Add all the other less important commands
 		return commands;
 	}
 
-	private String[] getMinecraftArguments(CompleteVersion version, File gameDirectory, User user) {
-		Map<String, String> map = new HashMap<String, String>();
+	private String[] getMinecraftArguments(@SuppressWarnings("hiding") CompleteVersion version, File gameDirectory, User user) {
+		Map<String, String> map = new HashMap<>();
 		StrSubstitutor substitutor = new StrSubstitutor(map);
 		String[] split = version.getMinecraftArguments().split(" ");
 
@@ -152,7 +153,7 @@ public class MinecraftLauncher {
 		String separator = System.getProperty("path.separator");
 
 		// Add all the libraries to the classpath.
-		for (Library library : version.getLibrariesForOS()) {
+		for (Library library : this.version.getLibrariesForOS()) {
 			if (library.getNatives() != null) {
 				continue;
 			}
@@ -177,7 +178,7 @@ public class MinecraftLauncher {
 		}
 
 		// Add the modpack.jar to the classpath, if it exists and minecraftforge is not a library already
-		File modpack = new File(pack.getBinDir(), "modpack.jar");
+		File modpack = new File(this.pack.getBinDir(), "modpack.jar");
 		if (modpack.exists()) {
 			if (result.length() > 1) {
 				result.append(separator);
@@ -186,9 +187,9 @@ public class MinecraftLauncher {
 		}
 
 		// Add the minecraft jar to the classpath
-		File minecraft = new File(pack.getBinDir(), "minecraft.jar");
+		File minecraft = new File(this.pack.getBinDir(), "minecraft.jar");
 		if (!minecraft.exists()) {
-			throw new RuntimeException("Minecraft not installed for this pack: " + pack);
+			throw new RuntimeException("Minecraft not installed for this pack: " + this.pack);
 		}
 		if (result.length() > 1) {
 			result.append(separator);

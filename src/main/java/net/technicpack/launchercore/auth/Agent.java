@@ -27,4 +27,12 @@ public class Agent {
 		this.name = name;
 		this.version = version;
 	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public String getVersion() {
+		return this.version;
+	}
 }

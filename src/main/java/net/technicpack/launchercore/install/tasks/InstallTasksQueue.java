@@ -1,14 +1,9 @@
 package net.technicpack.launchercore.install.tasks;
 
-import net.technicpack.launchercore.install.InstalledPack;
 import net.technicpack.launchercore.minecraft.CompleteVersion;
 import net.technicpack.launchercore.util.DownloadListener;
-import sun.misc.Launcher;
-
-import java.awt.Component;
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class InstallTasksQueue {
 	private DownloadListener listener;
@@ -16,30 +11,30 @@ public class InstallTasksQueue {
 	private IInstallTask currentTask;
 	private CompleteVersion completeVersion;
 
-	public InstallTasksQueue(DownloadListener listener, Component uiParent, InstalledPack pack, String build) {
+	public InstallTasksQueue(DownloadListener listener) {
 		this.listener = listener;
-		this.tasks = new LinkedList<IInstallTask>();
+		this.tasks = new LinkedList<>();
 		this.currentTask = null;
 	}
 
 	public void RefreshProgress() {
-		listener.stateChanged(currentTask.getTaskDescription(), currentTask.getTaskProgress());
+		this.listener.stateChanged(this.currentTask.getTaskDescription(), this.currentTask.getTaskProgress());
 	}
 
 	public void RunAllTasks() throws IOException {
-		while (!tasks.isEmpty()) {
-			currentTask = tasks.removeFirst();
+		while (!this.tasks.isEmpty()) {
+			this.currentTask = this.tasks.removeFirst();
 			RefreshProgress();
-			currentTask.runTask(this);
+			this.currentTask.runTask(this);
 		}
 	}
 
 	public void AddNextTask(IInstallTask task) {
-		tasks.addFirst(task);
+		this.tasks.addFirst(task);
 	}
 
 	public void AddTask(IInstallTask task) {
-		tasks.addLast(task);
+		this.tasks.addLast(task);
 	}
 
 	public void setCompleteVersion(CompleteVersion version) {

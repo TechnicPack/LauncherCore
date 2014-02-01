@@ -1,6 +1,5 @@
 package net.technicpack.launchercore.install.tasks;
 
-import net.technicpack.launchercore.minecraft.ExtractRules;
 import net.technicpack.launchercore.util.ZipUtils;
 
 import java.io.File;
@@ -10,16 +9,10 @@ import java.util.zip.ZipException;
 public class UnzipFileTask extends ListenerTask {
 	private File zipFile;
 	private File destination;
-	private ExtractRules rules;
 
 	public UnzipFileTask(File zipFile, File destination) {
-		this(zipFile, destination, null);
-	}
-
-	public UnzipFileTask(File zipFile, File destination, ExtractRules rules) {
 		this.zipFile = zipFile;
 		this.destination = destination;
-		this.rules = rules;
 	}
 
 	@Override
@@ -31,14 +24,14 @@ public class UnzipFileTask extends ListenerTask {
 	public void runTask(InstallTasksQueue queue) throws IOException {
 		super.runTask(queue);
 
-		if (!zipFile.exists()) {
-			throw new ZipException("Attempting to extract file "+zipFile.getName()+", but it did not exist.");
+		if (!this.zipFile.exists()) {
+			throw new ZipException("Attempting to extract file "+this.zipFile.getName()+", but it did not exist.");
 		}
 
-		if (!destination.exists()) {
-			destination.mkdirs();
+		if (!this.destination.exists()) {
+			this.destination.mkdirs();
 		}
 
-		ZipUtils.unzipFile(zipFile, destination, this);
+		ZipUtils.unzipFile(this.zipFile, this.destination, this);
 	}
 }

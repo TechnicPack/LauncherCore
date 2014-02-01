@@ -22,6 +22,7 @@ package net.technicpack.launchercore.auth;
 import net.technicpack.launchercore.exception.AuthenticationNetworkFailureException;
 import net.technicpack.launchercore.install.user.User;
 import net.technicpack.launchercore.util.Utils;
+
 import org.apache.commons.io.IOUtils;
 
 import java.io.DataOutputStream;
@@ -49,6 +50,7 @@ public class AuthenticationService {
 		return response;
 	}
 
+	@SuppressWarnings("resource")
 	private static String postJson(String url, String data) throws IOException {
 		byte[] rawData = data.getBytes("UTF-8");
 		HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
@@ -78,7 +80,9 @@ public class AuthenticationService {
 			}
 		}
 
-		return IOUtils.toString(stream);
+		String returnable = IOUtils.toString(stream);
+		stream.close();
+		return returnable;
 	}
 
 	public static AuthResponse requestLogin(String username, String password, String clientToken) throws AuthenticationNetworkFailureException {

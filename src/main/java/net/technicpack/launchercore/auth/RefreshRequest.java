@@ -23,12 +23,16 @@ public class RefreshRequest extends Response {
 	private String accessToken;
 	private String clientToken;
 
-	public RefreshRequest() {
-
-	}
-
 	public RefreshRequest(String accessToken, String clientToken) {
 		this.accessToken = accessToken;
 		this.clientToken = clientToken;
+	}
+
+	public String getAccessToken() {
+		return this.accessToken;
+	}
+
+	public String getClientToken() {
+		return this.clientToken;
 	}
 }

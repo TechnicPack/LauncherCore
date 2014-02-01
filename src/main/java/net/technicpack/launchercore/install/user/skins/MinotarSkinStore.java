@@ -11,13 +11,13 @@ public class MinotarSkinStore implements ISkinStore {
 	private String mBaseUrl;
 
 	public MinotarSkinStore(String baseUrl) {
-		mBaseUrl = baseUrl;
+		this.mBaseUrl = baseUrl;
 	}
 
 	@Override
 	public void downloadUserSkin(User user, String location) {
 		try {
-			DownloadUtils.downloadFile(mBaseUrl+"skin/"+user.getDisplayName(), user.getDisplayName(), location);
+			DownloadUtils.downloadFile(this.mBaseUrl+"skin/"+user.getDisplayName(), user.getDisplayName(), location);
 		} catch (IOException e) {
 			Utils.getLogger().log(Level.INFO, "Error downloading user face image: " + user.getDisplayName(), e);
 		}
@@ -26,7 +26,7 @@ public class MinotarSkinStore implements ISkinStore {
 	@Override
 	public void downloadUserFace(User user, String location) {
 		try {
-			DownloadUtils.downloadFile(mBaseUrl+"helm/"+user.getDisplayName()+"/100", user.getDisplayName(), location);
+			DownloadUtils.downloadFile(this.mBaseUrl+"helm/"+user.getDisplayName()+"/100", user.getDisplayName(), location);
 		} catch (IOException e) {
 			Utils.getLogger().log(Level.INFO, "Error downloading user face image: " + user.getDisplayName(), e);
 		}

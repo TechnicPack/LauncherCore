@@ -25,23 +25,23 @@ public class Response {
 	private String cause;
 
 	public String getError() {
-		return error;
+		return this.error;
 	}
 
 	public String getErrorMessage() {
-		return errorMessage;
+		return this.errorMessage;
 	}
 
 	public String getCause() {
-		return cause;
+		return this.cause;
 	}
 
 	@Override
 	public String toString() {
 		return "Response{" +
-				"error='" + error + '\'' +
-				", errorMessage='" + errorMessage + '\'' +
-				", cause='" + cause + '\'' +
+				"error='" + this.error + '\'' +
+				", errorMessage='" + this.errorMessage + '\'' +
+				", cause='" + this.cause + '\'' +
 				'}';
 	}
 }

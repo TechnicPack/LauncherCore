@@ -11,7 +11,6 @@ public class EnsureFileTask implements IInstallTask {
 	private File zipExtractLocation;
 	private String sourceUrl;
 	private String md5;
-	private ExtractRules rules;
 	private String friendlyFileName;
 
 	public EnsureFileTask(File fileLocation, File zipExtractLocation, String sourceUrl, String friendlyFileName) {
@@ -26,12 +25,11 @@ public class EnsureFileTask implements IInstallTask {
 		this(fileLocation, zipExtractLocation, sourceUrl, fileLocation.getName(), md5, rules);
 	}
 
-	public EnsureFileTask(File fileLocation, File zipExtractLocation, String sourceUrl, String friendlyFileName, String md5, ExtractRules rules) {
+	public EnsureFileTask(File fileLocation, File zipExtractLocation, String sourceUrl, String friendlyFileName, String md5, @SuppressWarnings("unused") /* Cannot fix without having duplicate constructors */ ExtractRules rules) {
 		this.cacheLocation = fileLocation;
 		this.zipExtractLocation = zipExtractLocation;
 		this.sourceUrl = sourceUrl;
 		this.md5 = md5;
-		this.rules = rules;
 		this.friendlyFileName = friendlyFileName;
 	}
 
@@ -48,7 +46,7 @@ public class EnsureFileTask implements IInstallTask {
 	@Override
 	public void runTask(InstallTasksQueue queue) throws IOException {
 		if (this.zipExtractLocation != null)
-			queue.AddNextTask(new UnzipFileTask(this.cacheLocation, this.zipExtractLocation, this.rules));
+			queue.AddNextTask(new UnzipFileTask(this.cacheLocation, this.zipExtractLocation));
 
 		if (!this.cacheLocation.exists() || (this.md5 != null && !this.md5.isEmpty() && !MD5Utils.checkMD5(this.cacheLocation, this.md5)))
 			queue.AddNextTask(new DownloadFileTask(this.sourceUrl, this.cacheLocation, this.friendlyFileName));

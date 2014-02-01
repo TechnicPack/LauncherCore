@@ -36,12 +36,12 @@ public class Download implements Runnable {
 
 	private URL url;
 	private long size = -1;
-	private long downloaded = 0;
+	long downloaded = 0;
 	private String outPath;
 	private String name;
-	private DownloadListener listener;
+	DownloadListener listener;
 	private Result result = Result.FAILURE;
-	private File outFile = null;
+	File outFile = null;
 	private Exception exception = null;
 
 	public Download(String url, String name, String outPath) throws MalformedURLException {
@@ -51,20 +51,21 @@ public class Download implements Runnable {
 	}
 
 	public float getProgress() {
-		return ((float) downloaded / size) * 100;
+		return ((float) this.downloaded / this.size) * 100;
 	}
 
 	public Exception getException() {
-		return exception;
+		return this.exception;
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void run() {
+		@SuppressWarnings("resource")
 		ReadableByteChannel rbc = null;
+		@SuppressWarnings("resource")
 		FileOutputStream fos = null;
 		try {
-			HttpURLConnection conn = Utils.openHttpConnection(url);
+			HttpURLConnection conn = Utils.openHttpConnection(this.url);
 			int response = conn.getResponseCode();
 			int responseFamily = response/100;
 
@@ -74,39 +75,40 @@ public class Download implements Runnable {
 				throw new DownloadException("The server issued a "+response+" response code.");
 			}
 
+			@SuppressWarnings("resource")
 			InputStream in = getConnectionInputStream(conn);
 
-			size = conn.getContentLength();
-			outFile = new File(outPath);
-			outFile.delete();
+			this.size = conn.getContentLength();
+			this.outFile = new File(this.outPath);
+			this.outFile.delete();
 
 			rbc = Channels.newChannel(in);
-			fos = new FileOutputStream(outFile);
+			fos = new FileOutputStream(this.outFile);
 
 			stateChanged();
 
 			Thread progress = new MonitorThread(Thread.currentThread(), rbc);
 			progress.start();
 
-			fos.getChannel().transferFrom(rbc, 0, size > 0 ? size : Integer.MAX_VALUE);
+			fos.getChannel().transferFrom(rbc, 0, this.size > 0 ? this.size : Integer.MAX_VALUE);
 			in.close();
 			rbc.close();
 			progress.interrupt();
-			if (size > 0) {
-				if (size == outFile.length()) {
-					result = Result.SUCCESS;
+			if (this.size > 0) {
+				if (this.size == this.outFile.length()) {
+					this.result = Result.SUCCESS;
 				}
 			} else {
-				result = Result.SUCCESS;
+				this.result = Result.SUCCESS;
 			}
 		} catch (PermissionDeniedException e) {
-			exception = e;
-			result = Result.PERMISSION_DENIED;
+			this.exception = e;
+			this.result = Result.PERMISSION_DENIED;
 		} catch (DownloadException e) {
-			exception = e;
-			result = Result.FAILURE;
+			this.exception = e;
+			this.result = Result.FAILURE;
 		} catch (Exception e) {
-			exception = e;
+			this.exception = e;
 			e.printStackTrace();
 		} finally {
 			IOUtils.closeQuietly(fos);
@@ -114,8 +116,9 @@ public class Download implements Runnable {
 		}
 	}
 
+	@SuppressWarnings("static-method")
 	protected InputStream getConnectionInputStream(final URLConnection urlconnection) throws DownloadException {
-		final AtomicReference<InputStream> is = new AtomicReference<InputStream>();
+		final AtomicReference<InputStream> is = new AtomicReference<>();
 
 		for (int j = 0; (j < 3) && (is.get() == null); j++) {
 			StreamThread stream = new StreamThread(urlconnection, is);
@@ -148,9 +151,9 @@ public class Download implements Runnable {
 		return new BufferedInputStream(is.get());
 	}
 
-	private void stateChanged() {
-		if (listener != null)
-			listener.stateChanged(name, getProgress());
+	void stateChanged() {
+		if (this.listener != null)
+			this.listener.stateChanged(this.name, getProgress());
 	}
 
 	public void setListener(DownloadListener listener) {
@@ -158,11 +161,11 @@ public class Download implements Runnable {
 	}
 
 	public Result getResult() {
-		return result;
+		return this.result;
 	}
 
 	public File getOutFile() {
-		return outFile;
+		return this.outFile;
 	}
 
 	private static class StreamThread extends Thread {
@@ -178,10 +181,10 @@ public class Download implements Runnable {
 		@Override
 		public void run() {
 			try {
-				is.set(urlconnection.getInputStream());
+				this.is.set(this.urlconnection.getInputStream());
 			} catch (SocketException e) {
 				if (e.getMessage().equalsIgnoreCase("Permission denied: connect")) {
-					permDenied.set(true);
+					this.permDenied.set(true);
 				}
 			} catch (IOException ignore) {
 			}
@@ -203,16 +206,16 @@ public class Download implements Runnable {
 		@Override
 		public void run() {
 			while (!this.isInterrupted()) {
-				long diff = outFile.length() - downloaded;
-				downloaded = outFile.length();
+				long diff = Download.this.outFile.length() - Download.this.downloaded;
+				Download.this.downloaded = Download.this.outFile.length();
 				if (diff == 0) {
-					if ((System.currentTimeMillis() - last) > TIMEOUT) {
-						if (listener != null) {
-							listener.stateChanged("Download Failed", getProgress());
+					if ((System.currentTimeMillis() - this.last) > TIMEOUT) {
+						if (Download.this.listener != null) {
+							Download.this.listener.stateChanged("Download Failed", getProgress());
 						}
 						try {
-							rbc.close();
-							downloadThread.interrupt();
+							this.rbc.close();
+							this.downloadThread.interrupt();
 						} catch (Exception ignore) {
 							//We catch all exceptions here, because ReadableByteChannel is AWESOME
 							//and was throwing NPE's sometimes when we tried to close it after
@@ -221,7 +224,7 @@ public class Download implements Runnable {
 						return;
 					}
 				} else {
-					last = System.currentTimeMillis();
+					this.last = System.currentTimeMillis();
 				}
 
 				stateChanged();
