@@ -2,11 +2,13 @@ package net.technicpack.launchercore.install.tasks;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import net.technicpack.launchercore.exception.DownloadException;
 import net.technicpack.launchercore.install.InstalledPack;
 import net.technicpack.launchercore.minecraft.MojangConstants;
 import net.technicpack.launchercore.util.DownloadUtils;
 import net.technicpack.launchercore.util.Utils;
+
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -15,6 +17,7 @@ import java.nio.charset.Charset;
 import java.util.Map;
 
 public class GetAssetsIndexTask extends ListenerTask {
+	@SuppressWarnings("unused")
 	private InstalledPack pack;
 
 	public GetAssetsIndexTask(InstalledPack pack) {
