@@ -22,6 +22,8 @@ package net.technicpack.launchercore.exception;
 import java.io.IOException;
 
 public class PackNotAvailableOfflineException extends IOException {
+
+	private static final long serialVersionUID = 3246491999503435492L;
 	private String packDisplayName;
 	private Throwable cause;
 

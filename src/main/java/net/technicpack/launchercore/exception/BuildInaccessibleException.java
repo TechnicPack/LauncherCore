@@ -3,6 +3,8 @@ package net.technicpack.launchercore.exception;
 import java.io.IOException;
 
 public class BuildInaccessibleException extends IOException {
+
+	private static final long serialVersionUID = -4905270588640056830L;
 	private String packDisplayName;
 	private String build;
 	private Throwable cause;

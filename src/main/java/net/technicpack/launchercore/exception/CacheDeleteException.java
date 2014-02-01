@@ -22,6 +22,8 @@ package net.technicpack.launchercore.exception;
 import java.io.IOException;
 
 public class CacheDeleteException extends IOException {
+
+	private static final long serialVersionUID = 6462027370292375448L;
 	private Throwable cause;
 	String filePath;
 
