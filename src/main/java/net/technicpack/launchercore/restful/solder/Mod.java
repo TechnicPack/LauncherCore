@@ -36,18 +36,18 @@ public class Mod extends Resource {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public String getVersion() {
-		return version;
+		return this.version;
 	}
 
 	@Override
 	public String toString() {
 		return "Mod{" +
-				"name='" + name + '\'' +
-				", version='" + version + '\'' +
+				"name='" + this.name + '\'' +
+				", version='" + this.version + '\'' +
 				", url='" + getUrl() + '\'' +
 				", md5='" + getMd5() + '\'' +
 				'}';
