@@ -20,6 +20,7 @@ package net.technicpack.launchercore.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
@@ -112,6 +113,7 @@ public class Utils {
 	 * @return True if the content can be accessed successfully, false otherwise.
 	 */
 	public static boolean pingHttpURL(String urlLoc) {
+		@SuppressWarnings("resource")
 		InputStream stream = null;
 		try {
 			final URL url = new URL(urlLoc);
@@ -124,9 +126,8 @@ public class Utils {
 			if (responseFamily == 2) {
 				stream = conn.getInputStream();
 				return true;
-			} else {
-				return false;
 			}
+			return false;
 		} catch (IOException e) {
 			return false;
 		} finally {
@@ -144,6 +145,7 @@ public class Utils {
 			String urlParameters = "v=1&tid=UA-30896795-3&cid=" + Settings.getClientId() + "&t=event&ec=" + category + "&ea=" + action + "&el=" + label;
 			
 			con.setDoOutput(true);
+			@SuppressWarnings("resource")
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 			wr.writeBytes(urlParameters);
 			wr.flush();
@@ -152,6 +154,7 @@ public class Utils {
 			int responseCode = con.getResponseCode();
 			System.out.println("Analytics Response [" + category + "]: " + responseCode);
 	 
+			@SuppressWarnings("resource")
 			BufferedReader in = new BufferedReader(
 			        new InputStreamReader(con.getInputStream()));
 			String inputLine;
