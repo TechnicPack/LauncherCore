@@ -37,29 +37,29 @@ public class LaunchOptions {
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public String getIconPath() {
-		return iconPath;
+		return this.iconPath;
 	}
 
 	public int getWidth() {
-		return width;
+		return this.width;
 	}
 
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 
 	public boolean getFullscreen() {
-		return fullscreen;
+		return this.fullscreen;
 	}
 
 	public void appendToCommands(List<String> commands) {
 		if (getTitle() != null) {
 			commands.add("--title");
-			commands.add(title);
+			commands.add(this.title);
 		}
 
 		if (getWidth() > -1) {

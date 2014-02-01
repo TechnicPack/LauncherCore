@@ -50,7 +50,7 @@ public class SolderPackInfo extends RestObject implements PackInfo {
 	}
 
 	public Solder getSolder() {
-		return solder;
+		return this.solder;
 	}
 
 	public void setSolder(Solder solder) {
@@ -59,56 +59,56 @@ public class SolderPackInfo extends RestObject implements PackInfo {
 
 	@Override
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	@Override
 	public String getDisplayName() {
-		return display_name;
+		return this.display_name;
 	}
 
 	@Override
 	public String getUrl() {
-		return url;
+		return this.url;
 	}
 
 	@Override
 	public Resource getIcon() {
-		if (icon == null) {
-			return new Resource(solder.getMirrorUrl() + name + "/resources/icon.png", logo_md5);
+		if (this.icon == null) {
+			return new Resource(this.solder.getMirrorUrl() + this.name + "/resources/icon.png", this.logo_md5);
 		}
-		return new Resource(icon, icon_md5);
+		return new Resource(this.icon, this.icon_md5);
 	}
 
 	@Override
 	public Resource getBackground() {
-		if (background == null) {
-			return new Resource(solder.getMirrorUrl() + name + "/resources/background.jpg", logo_md5);
+		if (this.background == null) {
+			return new Resource(this.solder.getMirrorUrl() + this.name + "/resources/background.jpg", this.logo_md5);
 		}
-		return new Resource(background, background_md5);
+		return new Resource(this.background, this.background_md5);
 	}
 
 	@Override
 	public Resource getLogo() {
-		if (logo == null) {
-			return new Resource(solder.getMirrorUrl() + name + "/resources/logo_180.png", logo_md5);
+		if (this.logo == null) {
+			return new Resource(this.solder.getMirrorUrl() + this.name + "/resources/logo_180.png", this.logo_md5);
 		}
-		return new Resource(logo, logo_md5);
+		return new Resource(this.logo, this.logo_md5);
 	}
 
 	@Override
 	public String getRecommended() {
-		return recommended;
+		return this.recommended;
 	}
 
 	@Override
 	public String getLatest() {
-		return latest;
+		return this.latest;
 	}
 
 	@Override
 	public List<String> getBuilds() {
-		return builds;
+		return this.builds;
 	}
 
 	@Override
@@ -120,35 +120,35 @@ public class SolderPackInfo extends RestObject implements PackInfo {
 	@Override
 	public Modpack getModpack(String build, User user) throws BuildInaccessibleException {
 		try {
-			Modpack pack = RestObject.getRestObject(Modpack.class, SolderConstants.getSolderBuildUrl(solder.getUrl(), name, build, user.getProfile().getName()));
+			Modpack pack = RestObject.getRestObject(Modpack.class, SolderConstants.getSolderBuildUrl(this.solder.getUrl(), this.name, build, user.getProfile().getName()));
 
 			if (pack != null) {
 				return pack;
 			}
 		} catch (RestfulAPIException e) {
-			throw new BuildInaccessibleException(display_name, build, e);
+			throw new BuildInaccessibleException(this.display_name, build, e);
 		}
 
-		throw new BuildInaccessibleException(display_name, build);
+		throw new BuildInaccessibleException(this.display_name, build);
 	}
 
 	@Override
 	public String toString() {
 		return "SolderPackInfo{" +
-				"name='" + name + '\'' +
-				", display_name='" + display_name + '\'' +
-				", url='" + url + '\'' +
-				", icon_md5='" + icon_md5 + '\'' +
-				", logo_md5='" + logo_md5 + '\'' +
-				", background_md5='" + background_md5 + '\'' +
-				", recommended='" + recommended + '\'' +
-				", latest='" + latest + '\'' +
-				", builds=" + builds +
-				", solder=" + solder +
+				"name='" + this.name + '\'' +
+				", display_name='" + this.display_name + '\'' +
+				", url='" + this.url + '\'' +
+				", icon_md5='" + this.icon_md5 + '\'' +
+				", logo_md5='" + this.logo_md5 + '\'' +
+				", background_md5='" + this.background_md5 + '\'' +
+				", recommended='" + this.recommended + '\'' +
+				", latest='" + this.latest + '\'' +
+				", builds=" + this.builds +
+				", solder=" + this.solder +
 				'}';
 	}
 
-	public static SolderPackInfo getSolderPackInfo(String url, User user) throws RestfulAPIException {
+	public static SolderPackInfo getSolderPackInfo(String url, @SuppressWarnings("unused") User user) throws RestfulAPIException {
 		SolderPackInfo info = getRestObject(SolderPackInfo.class, url);
 		if (info == null) {
 			return null;

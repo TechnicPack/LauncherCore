@@ -30,6 +30,6 @@ public enum LaunchAction {
 
 	@Override
 	public String toString() {
-		return display;
+		return this.display;
 	}
 }

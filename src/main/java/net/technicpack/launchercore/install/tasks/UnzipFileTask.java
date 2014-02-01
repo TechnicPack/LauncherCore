@@ -10,6 +10,7 @@ import java.util.zip.ZipException;
 public class UnzipFileTask extends ListenerTask {
 	private File zipFile;
 	private File destination;
+	@SuppressWarnings("unused")
 	private ExtractRules rules;
 
 	public UnzipFileTask(File zipFile, File destination) {
@@ -31,14 +32,14 @@ public class UnzipFileTask extends ListenerTask {
 	public void runTask(InstallTasksQueue queue) throws IOException {
 		super.runTask(queue);
 
-		if (!zipFile.exists()) {
-			throw new ZipException("Attempting to extract file "+zipFile.getName()+", but it did not exist.");
+		if (!this.zipFile.exists()) {
+			throw new ZipException("Attempting to extract file "+this.zipFile.getName()+", but it did not exist.");
 		}
 
-		if (!destination.exists()) {
-			destination.mkdirs();
+		if (!this.destination.exists()) {
+			this.destination.mkdirs();
 		}
 
-		ZipUtils.unzipFile(zipFile, destination, this);
+		ZipUtils.unzipFile(this.zipFile, this.destination, this);
 	}
 }

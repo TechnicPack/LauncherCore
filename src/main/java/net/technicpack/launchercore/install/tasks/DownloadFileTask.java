@@ -30,7 +30,7 @@ public class DownloadFileTask extends ListenerTask {
 	public void runTask(InstallTasksQueue queue) throws IOException {
 		super.runTask(queue);
 
-		DownloadUtils.downloadFile(url, this.destination.getName(), this.destination.getAbsolutePath(), null, null, this);
+		DownloadUtils.downloadFile(this.url, this.destination.getName(), this.destination.getAbsolutePath(), null, null, this);
 
 		if (!this.destination.exists()) {
 			throw new DownloadException("Failed to download "+this.destination.getName()+".");

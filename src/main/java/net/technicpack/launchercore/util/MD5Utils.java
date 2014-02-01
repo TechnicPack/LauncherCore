@@ -23,12 +23,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class MD5Utils {
 
 	public static String getMD5(File file) {
 		try {
+			@SuppressWarnings("resource")
 			FileInputStream fis = new FileInputStream(file);
 			String md5 = DigestUtils.md5Hex(fis);
 			fis.close();

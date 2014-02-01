@@ -20,7 +20,9 @@
 package net.technicpack.launchercore.auth;
 
 public class Agent {
+	@SuppressWarnings("unused")
 	private String name;
+	@SuppressWarnings("unused")
 	private String version;
 
 	public Agent(String name, String version) {

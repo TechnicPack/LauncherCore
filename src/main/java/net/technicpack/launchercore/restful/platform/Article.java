@@ -32,34 +32,34 @@ public class Article {
 	private String date;
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public String getDisplayTitle() {
-		return displayTitle;
+		return this.displayTitle;
 	}
 
 	public Resource getImage() {
-		return image;
+		return this.image;
 	}
 
 	public String getCategory() {
-		return category;
+		return this.category;
 	}
 
 	public String getUser() {
-		return user;
+		return this.user;
 	}
 
 	public String getSummary() {
-		return summary;
+		return this.summary;
 	}
 
 	public String getDate() {
-		return date;
+		return this.date;
 	}
 
 	public String getUrl() {
-		return PlatformConstants.PLATFORM + "article/view/" + title;
+		return PlatformConstants.PLATFORM + "article/view/" + this.title;
 	}
 }

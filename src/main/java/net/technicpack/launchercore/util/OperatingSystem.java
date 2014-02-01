@@ -58,7 +58,7 @@ public enum OperatingSystem {
 		//Prevents an issue with turkish users
 		String osName = System.getProperty("os.name").toLowerCase(Locale.ENGLISH);
 
-		for (OperatingSystem operatingSystem : values()) {
+		for (@SuppressWarnings("hiding") OperatingSystem operatingSystem : values()) {
 			for (String alias : operatingSystem.getAliases()) {
 				if (osName.contains(alias)) {
 					OperatingSystem.operatingSystem = operatingSystem;
@@ -71,11 +71,11 @@ public enum OperatingSystem {
 	}
 
 	public String[] getAliases() {
-		return aliases;
+		return this.aliases;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public boolean isSupported() {

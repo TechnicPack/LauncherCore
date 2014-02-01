@@ -22,14 +22,7 @@ package net.technicpack.launchercore.install.user;
 import com.google.gson.JsonObject;
 import net.technicpack.launchercore.auth.AuthResponse;
 import net.technicpack.launchercore.auth.Profile;
-import net.technicpack.launchercore.util.DownloadUtils;
 import net.technicpack.launchercore.util.Utils;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
 
 public class User {
 	private String username;
@@ -41,7 +34,7 @@ public class User {
     private transient boolean isOffline;
 
 	public User() {
-		isOffline = false;
+		this.isOffline = false;
 	}
 
     //This constructor is used to build a user for offline mode
@@ -71,31 +64,31 @@ public class User {
 	}
 
 	public String getUsername() {
-		return username;
+		return this.username;
 	}
 
 	public String getAccessToken() {
-		return accessToken;
+		return this.accessToken;
 	}
 
 	public String getClientToken() {
-		return clientToken;
+		return this.clientToken;
 	}
 
 	public String getDisplayName() {
-		return displayName;
+		return this.displayName;
 	}
 
 	public Profile getProfile() {
-		return profile;
+		return this.profile;
 	}
 
     public boolean isOffline() {
-        return isOffline;
+        return this.isOffline;
     }
 
 	public String getSessionId() {
-		return "token:" + accessToken + ":" + profile.getId();
+		return "token:" + this.accessToken + ":" + this.profile.getId();
 	}
 
 	public String getUserPropertiesAsJson() {

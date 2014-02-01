@@ -20,7 +20,9 @@
 package net.technicpack.launchercore.auth;
 
 public class RefreshRequest extends Response {
+	@SuppressWarnings("unused")
 	private String accessToken;
+	@SuppressWarnings("unused")
 	private String clientToken;
 
 	public RefreshRequest() {

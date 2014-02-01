@@ -44,12 +44,12 @@ public class InstallModpackTask implements IInstallTask {
 		//HACK - jamioflan is a big jerk who needs to put his mods in the dang mod directory!
 		File flansDir = new File(this.pack.getInstalledDirectory(), "Flan");
 
-		if (flansDir != null && flansDir.exists()) {
+		if (flansDir.exists()) {
 			deleteMods(flansDir);
 		}
 
 		File packOutput = this.pack.getInstalledDirectory();
-		for (Mod mod : modpack.getMods()) {
+		for (Mod mod : this.modpack.getMods()) {
 			String url = mod.getUrl();
 			String md5 = mod.getMd5();
 			String name = mod.getName() + "-" + mod.getVersion() + ".zip";
@@ -59,7 +59,7 @@ public class InstallModpackTask implements IInstallTask {
 			queue.AddNextTask(new EnsureFileTask(cache, packOutput, url, md5, null));
 		}
 
-		queue.AddTask(new CleanupModpackCacheTask(this.pack, modpack));
+		queue.AddTask(new CleanupModpackCacheTask(this.pack, this.modpack));
 	}
 
 	private void deleteMods(File modsDir) throws CacheDeleteException {

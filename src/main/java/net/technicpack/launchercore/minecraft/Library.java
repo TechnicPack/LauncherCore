@@ -36,29 +36,29 @@ public class Library {
 	private String url;
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public List<Rule> getRules() {
-		return rules;
+		return this.rules;
 	}
 
 	public Map<OperatingSystem, String> getNatives() {
-		return natives;
+		return this.natives;
 	}
 
 	public ExtractRules getExtract() {
-		return extract;
+		return this.extract;
 	}
 
 	public boolean isForCurrentOS() {
-		if (rules == null) {
+		if (this.rules == null) {
 			return true;
 		}
 
 		Rule.Action lastAction = Rule.Action.DISALLOW;
 
-		for (Rule rule : rules) {
+		for (Rule rule : this.rules) {
 			Rule.Action action = rule.getAction();
 			if (action != null) {
 				lastAction = action;
@@ -106,7 +106,7 @@ public class Library {
 
 	public String getDownloadUrl(String path) {
 		if (this.url != null) {
-			String checkUrl = url + path;
+			String checkUrl = this.url + path;
 			if (Utils.pingHttpURL(checkUrl)) {
 				return checkUrl;
 			}

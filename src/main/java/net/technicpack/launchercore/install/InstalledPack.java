@@ -26,10 +26,12 @@ import net.technicpack.launchercore.util.DownloadUtils;
 import net.technicpack.launchercore.util.MD5Utils;
 import net.technicpack.launchercore.util.ResourceUtils;
 import net.technicpack.launchercore.util.Utils;
+
 import org.apache.commons.io.FileUtils;
 
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -46,10 +48,10 @@ public class InstalledPack {
 	private static BufferedImage BACKUP_LOGO;
 	private static BufferedImage BACKUP_BACKGROUND;
 	private static BufferedImage BACKUP_ICON;
-	private transient AtomicReference<BufferedImage> logo = new AtomicReference<BufferedImage>();
-	private transient AtomicReference<BufferedImage> background = new AtomicReference<BufferedImage>();
-	private transient AtomicReference<BufferedImage> icon = new AtomicReference<BufferedImage>();
-	private transient HashMap<AtomicReference<BufferedImage>, AtomicReference<Boolean>> downloading = new HashMap<AtomicReference<BufferedImage>, AtomicReference<Boolean>>(3);
+	private transient AtomicReference<BufferedImage> logo = new AtomicReference<>();
+	private transient AtomicReference<BufferedImage> background = new AtomicReference<>();
+	private transient AtomicReference<BufferedImage> icon = new AtomicReference<>();
+	private transient HashMap<AtomicReference<BufferedImage>, AtomicReference<Boolean>> downloading = new HashMap<>(3);
 	private transient File installedDirectory;
 	private transient File binDir;
 	private transient File configDir;
@@ -79,12 +81,13 @@ public class InstalledPack {
 		this(name, platform, RECOMMENDED, MODPACKS_DIR + name);
 	}
 
+	@SuppressWarnings("boxing")
 	public InstalledPack() {
-		downloading.put(logo, new AtomicReference<Boolean>(false));
-		downloading.put(background, new AtomicReference<Boolean>(false));
-		downloading.put(icon, new AtomicReference<Boolean>(false));
-		isLocalOnly = false;
-		build = RECOMMENDED;
+		this.downloading.put(this.logo, new AtomicReference<>(false));
+		this.downloading.put(this.background, new AtomicReference<>(false));
+		this.downloading.put(this.icon, new AtomicReference<>(false));
+		this.isLocalOnly = false;
+		this.build = RECOMMENDED;
 	}
 
 	public void setRefreshListener(PackRefreshListener refreshListener) {
@@ -92,47 +95,47 @@ public class InstalledPack {
 	}
 
 	public String getDirectory() {
-		String path = directory;
-		if (directory != null && directory.startsWith(LAUNCHER_DIR)) {
-			path = new File(Utils.getLauncherDirectory(), directory.substring(9)).getAbsolutePath();
+		String path = this.directory;
+		if (this.directory != null && this.directory.startsWith(LAUNCHER_DIR)) {
+			path = new File(Utils.getLauncherDirectory(), this.directory.substring(9)).getAbsolutePath();
 		}
-		if (directory != null && directory.startsWith(MODPACKS_DIR)) {
-			path = new File(Utils.getModpacksDirectory(), directory.substring(11)).getAbsolutePath();
+		if (this.directory != null && this.directory.startsWith(MODPACKS_DIR)) {
+			path = new File(Utils.getModpacksDirectory(), this.directory.substring(11)).getAbsolutePath();
 		}
 		return path;
 	}
 
 	public void initDirectories() {
-		binDir = new File(installedDirectory, "bin");
-		configDir = new File(installedDirectory, "config");
-		savesDir = new File(installedDirectory, "saves");
-		cacheDir = new File(installedDirectory, "cache");
-		resourceDir = new File(installedDirectory, "resources");
-		modsDir = new File(installedDirectory, "mods");
-		coremodsDir = new File(installedDirectory, "coremods");
+		this.binDir = new File(this.installedDirectory, "bin");
+		this.configDir = new File(this.installedDirectory, "config");
+		this.savesDir = new File(this.installedDirectory, "saves");
+		this.cacheDir = new File(this.installedDirectory, "cache");
+		this.resourceDir = new File(this.installedDirectory, "resources");
+		this.modsDir = new File(this.installedDirectory, "mods");
+		this.coremodsDir = new File(this.installedDirectory, "coremods");
 
-		binDir.mkdirs();
-		configDir.mkdirs();
-		savesDir.mkdirs();
-		cacheDir.mkdirs();
-		resourceDir.mkdirs();
-		modsDir.mkdirs();
-		coremodsDir.mkdirs();
+		this.binDir.mkdirs();
+		this.configDir.mkdirs();
+		this.savesDir.mkdirs();
+		this.cacheDir.mkdirs();
+		this.resourceDir.mkdirs();
+		this.modsDir.mkdirs();
+		this.coremodsDir.mkdirs();
 	}
 
 	public String getDisplayName() {
-		if (info == null) {
-			return name;
+		if (this.info == null) {
+			return this.name;
 		}
-		return info.getDisplayName();
+		return this.info.getDisplayName();
 	}
 
 	public boolean isPlatform() {
-		return platform;
+		return this.platform;
 	}
 
 	public PackInfo getInfo() {
-		return info;
+		return this.info;
 	}
 
 	public void setInfo(PackInfo info) {
@@ -141,7 +144,7 @@ public class InstalledPack {
 	}
 
 	public boolean isLocalOnly() {
-		return isLocalOnly;
+		return this.isLocalOnly;
 	}
 
 	public void setLocalOnly() {
@@ -154,17 +157,17 @@ public class InstalledPack {
 	}
 
 	public String getBuild() {
-		if (info != null)
+		if (this.info != null)
 		{
-			if (build.equals(RECOMMENDED)) {
-				return info.getRecommended();
+			if (this.build.equals(RECOMMENDED)) {
+				return this.info.getRecommended();
 			}
-			if (build.equals(LATEST)) {
-				return info.getLatest();
+			if (this.build.equals(LATEST)) {
+				return this.info.getLatest();
 			}
 		}
 
-		return build;
+		return this.build;
 	}
 
 	public void setBuild(String build) {
@@ -172,72 +175,71 @@ public class InstalledPack {
 	}
 
 	public String getRawBuild() {
-		return build;
+		return this.build;
 	}
 
 	public File getInstalledDirectory() {
-		if (installedDirectory == null) {
+		if (this.installedDirectory == null) {
 			setPackDirectory(new File(getDirectory()));
 		}
-		return installedDirectory;
+		return this.installedDirectory;
 	}
 
 	public void setPackDirectory(File packPath) {
-		if (installedDirectory != null) {
+		if (this.installedDirectory != null) {
 			try {
-				FileUtils.copyDirectory(installedDirectory, packPath);
-				FileUtils.cleanDirectory(installedDirectory);
+				FileUtils.copyDirectory(this.installedDirectory, packPath);
+				FileUtils.cleanDirectory(this.installedDirectory);
 			} catch (IOException e) {
 				e.printStackTrace();
 				return;
 			}
 		}
-		installedDirectory = packPath;
-		String path = installedDirectory.getAbsolutePath();
+		this.installedDirectory = packPath;
+		String path = this.installedDirectory.getAbsolutePath();
 		if (path.startsWith(Utils.getModpacksDirectory().getAbsolutePath())) {
-			directory = MODPACKS_DIR + path.substring(Utils.getModpacksDirectory().getAbsolutePath().length() + 1);
+			this.directory = MODPACKS_DIR + path.substring(Utils.getModpacksDirectory().getAbsolutePath().length() + 1);
 		} else if (path.startsWith(Utils.getLauncherDirectory().getAbsolutePath())) {
-			directory = LAUNCHER_DIR + path.substring(Utils.getLauncherDirectory().getAbsolutePath().length() + 1);
+			this.directory = LAUNCHER_DIR + path.substring(Utils.getLauncherDirectory().getAbsolutePath().length() + 1);
 		}
 		initDirectories();
 	}
 
 	public File getBinDir() {
-		return binDir;
+		return this.binDir;
 	}
 
 	public File getConfigDir() {
-		return configDir;
+		return this.configDir;
 	}
 
 	public File getSavesDir() {
-		return savesDir;
+		return this.savesDir;
 	}
 
 	public File getCacheDir() {
-		return cacheDir;
+		return this.cacheDir;
 	}
 
 	public File getResourceDir() {
-		return resourceDir;
+		return this.resourceDir;
 	}
 
 	public File getModsDir() {
-		return modsDir;
+		return this.modsDir;
 	}
 
 	public File getCoremodsDir() {
-		return coremodsDir;
+		return this.coremodsDir;
 	}
 
 	public synchronized BufferedImage getLogo() {
-		if (logo.get() != null) {
-			return logo.get();
-		} else {
-			Resource resource = info != null ? info.getLogo() : null;
-			if (loadImage(logo, "logo.png", resource)) {
-				return logo.get();
-			}
+		if (this.logo.get() != null) {
+			return this.logo.get();
+		}
+		Resource resource = this.info != null ? this.info.getLogo() : null;
+		if (loadImage(this.logo, "logo.png", resource)) {
+			return this.logo.get();
 		}
 
 		if (BACKUP_LOGO == null) {
@@ -246,7 +248,7 @@ public class InstalledPack {
 		return BACKUP_LOGO;
 	}
 
-	private boolean loadImage(AtomicReference<BufferedImage> image, String name, Resource resource) {
+	private boolean loadImage(AtomicReference<BufferedImage> image, @SuppressWarnings("hiding") String name, Resource resource) {
 		File assets = new File(Utils.getAssetsDirectory(), "packs");
 		File packs = new File(assets, getName());
 		packs.mkdirs();
@@ -273,6 +275,7 @@ public class InstalledPack {
 		return cached;
 	}
 
+	@SuppressWarnings("static-method")
 	private boolean loadCachedImage(AtomicReference<BufferedImage> image, File file, String url, String md5) {
 		try {
 			if (file.exists() && (url.isEmpty() || md5.isEmpty() || MD5Utils.getMD5(file).equalsIgnoreCase(md5))) {
@@ -290,15 +293,18 @@ public class InstalledPack {
 		return false;
 	}
 
+	@SuppressWarnings("boxing")
 	private void downloadImage(final AtomicReference<BufferedImage> image, final File temp, final String url, final String md5) {
-		if (url.isEmpty() || downloading.get(image).get()) {
+		if (url.isEmpty() || this.downloading.get(image).get()) {
 			return;
 		}
 
-		downloading.get(image).set(true);
+		this.downloading.get(image).set(true);
+		@SuppressWarnings("hiding")
 		final String name = getName();
 		final InstalledPack pack = this;
 		Thread thread = new Thread(name + " Image Download Worker") {
+			@SuppressWarnings("synthetic-access")
 			@Override
 			public void run() {
 				try {
@@ -309,9 +315,9 @@ public class InstalledPack {
 					BufferedImage newImage;
 					newImage = ImageIO.read(download.getOutFile());
 					image.set(newImage);
-					downloading.get(image).set(false);
-					if (refreshListener != null) {
-						refreshListener.refreshPack(pack);
+					InstalledPack.this.downloading.get(image).set(false);
+					if (InstalledPack.this.refreshListener != null) {
+						InstalledPack.this.refreshListener.refreshPack(pack);
 					}
 				} catch (IOException e) {
 					System.out.println("Failed to download and load image from: " + url);
@@ -323,9 +329,10 @@ public class InstalledPack {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
+	@SuppressWarnings("static-method")
 	private BufferedImage loadBackup(String backup) {
 		try {
 			return ImageIO.read(ResourceUtils.getResourceAsStream(backup));
@@ -336,13 +343,12 @@ public class InstalledPack {
 	}
 
 	public synchronized BufferedImage getBackground() {
-		if (background.get() != null) {
-			return background.get();
-		} else {
-			Resource resource = info != null ? info.getBackground() : null;
-			if (loadImage(background, "background.jpg", resource)) {
-				return background.get();
-			}
+		if (this.background.get() != null) {
+			return this.background.get();
+		}
+		Resource resource = this.info != null ? this.info.getBackground() : null;
+		if (loadImage(this.background, "background.jpg", resource)) {
+			return this.background.get();
 		}
 
 		if (BACKUP_BACKGROUND == null) {
@@ -352,13 +358,12 @@ public class InstalledPack {
 	}
 
 	public synchronized BufferedImage getIcon() {
-		if (icon.get() != null) {
-			return icon.get();
-		} else {
-			Resource resource = info != null ? info.getIcon() : null;
-			if (loadImage(icon, "icon.png", resource)) {
-				return icon.get();
-			}
+		if (this.icon.get() != null) {
+			return this.icon.get();
+		}
+		Resource resource = this.info != null ? this.info.getIcon() : null;
+		if (loadImage(this.icon, "icon.png", resource)) {
+			return this.icon.get();
 		}
 
 		if (BACKUP_ICON == null) {
@@ -374,11 +379,11 @@ public class InstalledPack {
 	@Override
 	public String toString() {
 		return "InstalledPack{" +
-				"info=" + info +
-				", name='" + name + '\'' +
-				", platform=" + platform +
-				", build='" + build + '\'' +
-				", directory='" + directory + '\'' +
+				"info=" + this.info +
+				", name='" + this.name + '\'' +
+				", platform=" + this.platform +
+				", build='" + this.build + '\'' +
+				", directory='" + this.directory + '\'' +
 				'}';
 	}
 }

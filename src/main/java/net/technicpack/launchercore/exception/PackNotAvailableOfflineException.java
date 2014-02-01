@@ -22,6 +22,8 @@ package net.technicpack.launchercore.exception;
 import java.io.IOException;
 
 public class PackNotAvailableOfflineException extends IOException {
+
+	private static final long serialVersionUID = 3246491999503435492L;
 	private String packDisplayName;
 	private Throwable cause;
 
@@ -36,11 +38,11 @@ public class PackNotAvailableOfflineException extends IOException {
 
 	@Override
 	public String getMessage() {
-		return "The modpack " + packDisplayName + " does not appear to be installed or is corrupt, and is not available for Offline Play.";
+		return "The modpack " + this.packDisplayName + " does not appear to be installed or is corrupt, and is not available for Offline Play.";
 	}
 
 	@Override
-	public Throwable getCause() {
-		return cause;
+	public synchronized Throwable getCause() {
+		return this.cause;
 	}
 }

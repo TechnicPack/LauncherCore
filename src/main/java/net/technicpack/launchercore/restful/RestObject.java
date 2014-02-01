@@ -21,8 +21,8 @@ package net.technicpack.launchercore.restful;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
-import com.google.gson.JsonSyntaxException;
 import net.technicpack.launchercore.exception.RestfulAPIException;
+
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -38,14 +38,15 @@ public class RestObject {
 	private String error;
 
 	public boolean hasError() {
-		return error != null;
+		return this.error != null;
 	}
 
 	public String getError() {
-		return error;
+		return this.error;
 	}
 
 	public static <T extends RestObject> T getRestObject(Class<T> restObject, String url) throws RestfulAPIException {
+		@SuppressWarnings("resource")
 		InputStream stream = null;
 		try {
 			URLConnection conn = new URL(url).openConnection();
