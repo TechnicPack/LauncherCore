@@ -27,6 +27,7 @@ public abstract class ListenerTask implements IInstallTask, DownloadListener {
 		this.queue = queue;
 	}
 
+	@Override
 	public void stateChanged(String fileName, float progress) {
 		this.taskProgress = progress;
 		this.queue.RefreshProgress();

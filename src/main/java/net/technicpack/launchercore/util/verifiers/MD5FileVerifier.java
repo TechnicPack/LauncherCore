@@ -11,7 +11,8 @@ public class MD5FileVerifier implements IFileVerifier {
         this.md5Hash = md5Hash;
     }
 
-    public boolean isFileValid(File file) {
+    @Override
+	public boolean isFileValid(File file) {
         if (md5Hash == null || md5Hash.isEmpty())
             return false;
 
