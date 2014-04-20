@@ -126,6 +126,8 @@ public class MirrorStore {
                 if (download.getOutFile().exists() && (verifier == null || verifier.isFileValid(download.getOutFile()))) {
                     outputFile = download.getOutFile();
                     break;
+                } else if (verifier != null) {
+                    System.err.println("Download of " + url + " OK, but is not a valid (ZIP?) file: " + download.getOutFile().toString());
                 }
             }
         }
