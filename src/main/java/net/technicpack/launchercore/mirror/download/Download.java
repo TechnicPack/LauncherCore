@@ -70,8 +70,17 @@ public class Download implements Runnable {
             int responseFamily = response / 100;
 
             if (responseFamily == 3) {
-                throw new DownloadException("The server issued a redirect response which Technic failed to follow.");
-            } else if (responseFamily != 2) {
+                //throw new DownloadException("The server issued a redirect response which Technic failed to follow.");
+
+                String redirectLocation = conn.getHeaderField("Location");
+                System.out.println("Redirection URL Detected. New URL: " + redirectLocation);
+                URL redirectURL = new URL(redirectLocation);
+                conn = Utils.openHttpConnection(redirectURL);
+                response = conn.getResponseCode();
+                responseFamily = response / 100;
+            }
+
+            if (responseFamily != 2) {
                 throw new DownloadException("The server issued a " + response + " response code.");
             }
 
