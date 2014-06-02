@@ -26,13 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Modpack extends RestObject {
-	private String minecraft;
-	private List<Mod> mods;
+    private String minecraft;
+    private List<Mod> mods;
 
-	public Modpack() {
+    public Modpack() {
 
-	}
+    }
 
+<<<<<<< HEAD:src/main/java/net/technicpack/rest/io/Modpack.java
 	public Modpack(PlatformPackInfo info) {
         minecraft = info.getGameVersion();
 		mods = new ArrayList<Mod>();
@@ -43,8 +44,20 @@ public class Modpack extends RestObject {
 	public String getGameVersion() {
 		return minecraft;
 	}
+=======
+    public Modpack(PlatformPackInfo info) {
+        minecraft = info.getMinecraft();
+        mods = new ArrayList<Mod>();
+        Mod mod = new Mod(info.getName(), info.getRecommended(), info.getUrl(), "");
+        mods.add(mod);
+    }
 
-	public List<Mod> getMods() {
-		return mods;
-	}
+    public String getMinecraft() {
+        return minecraft;
+    }
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/restful/Modpack.java
+
+    public List<Mod> getMods() {
+        return mods;
+    }
 }

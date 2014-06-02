@@ -19,6 +19,7 @@
 
 package net.technicpack.launchercore.auth;
 
+<<<<<<< HEAD:src/main/java/net/technicpack/launchercore/auth/IGameAuthService.java
 import net.technicpack.launchercore.exception.AuthenticationNetworkFailureException;
 
 public interface IGameAuthService<UserData> {
@@ -26,4 +27,31 @@ public interface IGameAuthService<UserData> {
     public UserData createOfflineUser(String displayName);
     public IAuthResponse requestRefresh(UserData user) throws AuthenticationNetworkFailureException;
     public IAuthResponse requestLogin(String username, String password, String data) throws AuthenticationNetworkFailureException;
+=======
+public class Response {
+    private String error;
+    private String errorMessage;
+    private String cause;
+
+    public String getError() {
+        return error;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public String getCause() {
+        return cause;
+    }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "error='" + error + '\'' +
+                ", errorMessage='" + errorMessage + '\'' +
+                ", cause='" + cause + '\'' +
+                '}';
+    }
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/auth/Response.java
 }

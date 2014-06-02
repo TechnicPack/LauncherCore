@@ -19,6 +19,7 @@
 
 package net.technicpack.launchercore.auth;
 
+<<<<<<< HEAD:src/main/java/net/technicpack/launchercore/auth/IUserStore.java
 import java.util.Collection;
 
 public interface IUserStore<UserType> {
@@ -33,4 +34,18 @@ public interface IUserStore<UserType> {
 
 	void setLastUser(String username);
 	String getLastUser();
+=======
+public class RefreshRequest extends Response {
+    private String accessToken;
+    private String clientToken;
+
+    public RefreshRequest() {
+
+    }
+
+    public RefreshRequest(String accessToken, String clientToken) {
+        this.accessToken = accessToken;
+        this.clientToken = clientToken;
+    }
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/auth/RefreshRequest.java
 }

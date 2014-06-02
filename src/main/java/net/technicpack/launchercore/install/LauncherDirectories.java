@@ -21,12 +21,23 @@ package net.technicpack.launchercore.install;
 
 import java.io.File;
 
+<<<<<<< HEAD:src/main/java/net/technicpack/launchercore/install/LauncherDirectories.java
 public abstract class LauncherDirectories {
 	public abstract File getLauncherDirectory();
 
 	public abstract File getCacheDirectory();
+=======
+public abstract class Directories {
+    public static Directories instance;
 
-	public abstract File getAssetsDirectory();
+    public abstract File getLauncherDirectory();
 
-	public abstract File getModpacksDirectory();
+    public abstract File getSettingsDirectory();
+
+    public abstract File getCacheDirectory();
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/util/Directories.java
+
+    public abstract File getAssetsDirectory();
+
+    public abstract File getModpacksDirectory();
 }

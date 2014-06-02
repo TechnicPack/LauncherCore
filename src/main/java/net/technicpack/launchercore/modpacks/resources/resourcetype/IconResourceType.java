@@ -19,6 +19,7 @@
 
 package net.technicpack.launchercore.modpacks.resources.resourcetype;
 
+<<<<<<< HEAD:src/main/java/net/technicpack/launchercore/modpacks/resources/resourcetype/IconResourceType.java
 import net.technicpack.launchercore.modpacks.ModpackModel;
 import net.technicpack.rest.io.Resource;
 
@@ -31,5 +32,22 @@ public class IconResourceType implements IModpackResourceType {
     @Override
     public String getImageName() {
         return "icon.png";
+=======
+public class AuthRequest {
+    private Agent agent;
+    private String username;
+    private String password;
+    private String clientToken;
+
+    public AuthRequest() {
+
+    }
+
+    public AuthRequest(Agent agent, String username, String password, String clientToken) {
+        this.agent = agent;
+        this.username = username;
+        this.password = password;
+        this.clientToken = clientToken;
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/auth/AuthRequest.java
     }
 }

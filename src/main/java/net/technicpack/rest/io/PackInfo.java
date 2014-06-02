@@ -28,26 +28,27 @@ import java.util.List;
 
 public interface PackInfo {
 
-	public String getName();
+    public String getName();
 
-	public String getDisplayName();
+    public String getDisplayName();
 
-	public String getUrl();
+    public String getUrl();
 
-	public Resource getIcon();
+    public Resource getIcon();
 
-	public Resource getBackground();
+    public Resource getBackground();
 
-	public Resource getLogo();
+    public Resource getLogo();
 
-	public String getRecommended();
+    public String getRecommended();
 
-	public String getLatest();
+    public String getLatest();
 
-	public List<String> getBuilds();
+    public List<String> getBuilds();
 
-	public boolean shouldForceDirectory();
+    public boolean shouldForceDirectory();
 
+<<<<<<< HEAD:src/main/java/net/technicpack/rest/io/PackInfo.java
     public ArrayList<FeedItem> getFeed();
 
     public String getDescription();
@@ -61,4 +62,7 @@ public interface PackInfo {
 	public Modpack getModpack(String build) throws BuildInaccessibleException;
 
     public boolean isComplete();
+=======
+    public Modpack getModpack(String build, User user) throws BuildInaccessibleException;
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/restful/PackInfo.java
 }

@@ -19,9 +19,23 @@
 
 package net.technicpack.launchercore.install;
 
+<<<<<<< HEAD:src/main/java/net/technicpack/launchercore/install/ITasksQueue.java
 import net.technicpack.launchercore.install.tasks.IInstallTask;
 
 public interface ITasksQueue {
     void addNextTask(IInstallTask task);
     void addTask(IInstallTask task);
+=======
+public class LatestEntry {
+    private String snapshot;
+    private String release;
+
+    public String getSnapshot() {
+        return snapshot;
+    }
+
+    public String getRelease() {
+        return release;
+    }
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/minecraft/versionlist/LatestEntry.java
 }

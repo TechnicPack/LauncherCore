@@ -23,8 +23,17 @@ import net.technicpack.rest.RestObject;
 
 import java.util.ArrayList;
 
+<<<<<<< HEAD:src/main/java/net/technicpack/platform/io/SearchResultsData.java
 public class SearchResultsData extends RestObject {
     private SearchResult[] modpacks;
 
     public SearchResult[] getResults() { return modpacks; }
+=======
+public class News extends RestObject {
+    private List<Article> news;
+
+    public List<Article> getNews() {
+        return news;
+    }
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/restful/platform/News.java
 }

@@ -21,5 +21,9 @@ package net.technicpack.launchercore.launch;
 
 public interface ProcessExitListener {
 
+<<<<<<< HEAD:src/main/java/net/technicpack/launchercore/launch/ProcessExitListener.java
 	public void onProcessExit();
+=======
+    public void onMinecraftExit();
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/launch/MinecraftExitListener.java
 }

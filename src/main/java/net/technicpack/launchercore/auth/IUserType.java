@@ -19,7 +19,18 @@
 
 package net.technicpack.launchercore.auth;
 
+<<<<<<< HEAD:src/main/java/net/technicpack/launchercore/auth/IUserType.java
 public interface IUserType {
     public String getUsername();
     public String getDisplayName();
+=======
+public class Agent {
+    private String name;
+    private String version;
+
+    public Agent(String name, String version) {
+        this.name = name;
+        this.version = version;
+    }
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/auth/Agent.java
 }

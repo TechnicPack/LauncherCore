@@ -23,6 +23,7 @@ import net.technicpack.utilslib.Utils;
 
 import java.util.List;
 
+<<<<<<< HEAD:src/main/java/net/technicpack/launchercore/launch/GameProcess.java
 public class GameProcess {
 	private final List<String> commands;
 	private final Process process;
@@ -51,8 +52,30 @@ public class GameProcess {
 	public void setExitListener(ProcessExitListener exitListener) {
 		this.exitListener = exitListener;
 	}
+=======
+public class MinecraftProcess {
+    private final List<String> commands;
+    private final Process process;
+    private MinecraftExitListener exitListener;
+    private final ProcessMonitorThread monitorThread;
 
-	public Process getProcess() {
-		return process;
-	}
+    public MinecraftProcess(List<String> commands, Process process) {
+        this.commands = commands;
+        this.process = process;
+        this.monitorThread = new ProcessMonitorThread(this);
+        this.monitorThread.start();
+    }
+
+    public MinecraftExitListener getExitListener() {
+        return exitListener;
+    }
+
+    public void setExitListener(MinecraftExitListener exitListener) {
+        this.exitListener = exitListener;
+    }
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/launch/MinecraftProcess.java
+
+    public Process getProcess() {
+        return process;
+    }
 }

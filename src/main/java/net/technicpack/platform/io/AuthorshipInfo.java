@@ -21,6 +21,7 @@ package net.technicpack.platform.io;
 
 import java.util.Date;
 
+<<<<<<< HEAD:src/main/java/net/technicpack/platform/io/AuthorshipInfo.java
 public class AuthorshipInfo {
     private String user;
     private String avatar;
@@ -36,4 +37,27 @@ public class AuthorshipInfo {
     public String getUser() { return user; }
     public String getAvatar() { return avatar; }
     public Date getDate() { return date; }
+=======
+public class VersionEntry {
+    private String id;
+    private Date time;
+    private Date releaseTime;
+    private ReleaseType type;
+
+    public String getId() {
+        return id;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public Date getReleaseTime() {
+        return releaseTime;
+    }
+
+    public ReleaseType getType() {
+        return type;
+    }
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/minecraft/versionlist/VersionEntry.java
 }

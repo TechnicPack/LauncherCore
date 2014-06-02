@@ -19,6 +19,15 @@
 
 package net.technicpack.launchercore.auth;
 
+<<<<<<< HEAD:src/main/java/net/technicpack/launchercore/auth/IAuthListener.java
 public interface IAuthListener<UserType> {
 	void userChanged(UserType user);
+=======
+public class ValidateRequest {
+    private String accessToken;
+
+    public ValidateRequest(String accessToken) {
+        this.accessToken = accessToken;
+    }
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/auth/ValidateRequest.java
 }

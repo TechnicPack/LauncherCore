@@ -21,6 +21,7 @@ package net.technicpack.launchercore.modpacks.sources;
 
 import net.technicpack.launchercore.modpacks.InstalledPack;
 
+<<<<<<< HEAD:src/main/java/net/technicpack/launchercore/modpacks/sources/IInstalledPackRepository.java
 import java.util.List;
 import java.util.Map;
 
@@ -32,4 +33,16 @@ public interface IInstalledPackRepository {
 	InstalledPack put(InstalledPack installedPack);
 	InstalledPack remove(String name);
 	void save();
+=======
+    private List<VersionEntry> versions;
+    private LatestEntry latest;
+
+    public List<VersionEntry> getVersions() {
+        return versions;
+    }
+
+    public LatestEntry getLatest() {
+        return latest;
+    }
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/minecraft/versionlist/VersionList.java
 }

@@ -22,6 +22,7 @@ package net.technicpack.launchercore.image;
 import java.util.HashMap;
 import java.util.Map;
 
+<<<<<<< HEAD:src/main/java/net/technicpack/launchercore/image/ImageRepository.java
 public class ImageRepository<T> {
     private IImageMapper<T> mapper;
     private IImageStore<T> store;
@@ -47,5 +48,32 @@ public class ImageRepository<T> {
             job.start(key);
 
         return job;
+=======
+public enum ReleaseType {
+    SNAPSHOT("snapshot"),
+    RELEASE("release"),
+    OLD_BETA("old-beta"),
+    OLD_ALPHA("old-alpha");
+
+    private static final Map<String, ReleaseType> lookup = new HashMap<String, ReleaseType>();
+    private final String name;
+
+    private ReleaseType(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public static ReleaseType get(String name) {
+        return lookup.get(name);
+    }
+
+    static {
+        for (ReleaseType type : values()) {
+            lookup.put(type.getName(), type);
+        }
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/minecraft/ReleaseType.java
     }
 }

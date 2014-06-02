@@ -19,6 +19,12 @@
 
 package net.technicpack.launchercore.install;
 
+<<<<<<< HEAD:src/main/java/net/technicpack/launchercore/install/IVersionDataParser.java
 public interface IVersionDataParser<VersionData> {
     VersionData parseVersionData(String data);
+=======
+public interface PackRefreshListener {
+
+    public void refreshPack(InstalledPack pack);
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/install/PackRefreshListener.java
 }

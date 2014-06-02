@@ -25,32 +25,40 @@ import java.io.InputStreamReader;
 
 public class ProcessMonitorThread extends Thread {
 
+<<<<<<< HEAD
 	private final GameProcess process;
 
 	public ProcessMonitorThread(GameProcess process) {
 		super("ProcessMonitorThread");
 		this.process = process;
 	}
+=======
+    private final MinecraftProcess process;
 
-	public void run() {
-		InputStreamReader reader = new InputStreamReader(this.process.getProcess().getInputStream());
-		BufferedReader buf = new BufferedReader(reader);
-		String line = null;
+    public ProcessMonitorThread(MinecraftProcess process) {
+        super("ProcessMonitorThread");
+        this.process = process;
+    }
+>>>>>>> Re-tab & optimize imports for all files in core.
 
-		while (true) {
-			try {
-				while ((line = buf.readLine()) != null) {
-					System.out.println(" " + line);
-				}
-			} catch (IOException ex) {
+    public void run() {
+        InputStreamReader reader = new InputStreamReader(this.process.getProcess().getInputStream());
+        BufferedReader buf = new BufferedReader(reader);
+        String line = null;
+
+        while (true) {
+            try {
+                while ((line = buf.readLine()) != null) {
+                    System.out.println(" " + line);
+                }
+            } catch (IOException ex) {
 //				Logger.getLogger(ProcessMonitorThread.class.getName()).log(Level.SEVERE, null, ex);
-			} finally {
-				try {
-					buf.close();
-				} catch (IOException ex) {
+            } finally {
+                try {
+                    buf.close();
+                } catch (IOException ex) {
 //					Logger.getLogger(ProcessMonitorThread.class.getName()).log(Level.SEVERE, null, ex);
-				} finally
-                {
+                } finally {
                     try {
                         process.getProcess().waitFor();
                     } catch (InterruptedException e) {
@@ -58,11 +66,18 @@ public class ProcessMonitorThread extends Thread {
                     }
                     break;
                 }
-			}
-		}
+            }
+        }
 
+<<<<<<< HEAD
 		if (process.getExitListener() != null) {
 			process.getExitListener().onProcessExit();
 		}
 	}
+=======
+        if (process.getExitListener() != null) {
+            process.getExitListener().onMinecraftExit();
+        }
+    }
+>>>>>>> Re-tab & optimize imports for all files in core.
 }

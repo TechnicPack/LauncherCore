@@ -26,6 +26,7 @@ import java.io.IOException;
 
 public abstract class ListenerTask implements IInstallTask, DownloadListener {
 
+<<<<<<< HEAD
 	private float taskProgress;
 	private InstallTasksQueue queue;
 
@@ -51,4 +52,31 @@ public abstract class ListenerTask implements IInstallTask, DownloadListener {
 		this.taskProgress = progress;
 		this.queue.refreshProgress();
 	}
+=======
+    private float taskProgress;
+    private InstallTasksQueue queue;
+
+    public ListenerTask() {
+        taskProgress = 0;
+    }
+
+    @Override
+    public float getTaskProgress() {
+        return this.taskProgress;
+    }
+
+    @Override
+    public void runTask(InstallTasksQueue queue) throws IOException {
+        this.queue = queue;
+    }
+
+    protected void setQueue(InstallTasksQueue queue) {
+        this.queue = queue;
+    }
+
+    public void stateChanged(String fileName, float progress) {
+        this.taskProgress = progress;
+        this.queue.RefreshProgress();
+    }
+>>>>>>> Re-tab & optimize imports for all files in core.
 }

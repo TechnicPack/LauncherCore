@@ -23,7 +23,25 @@ public class TechnicConstants {
     public static final String technicURL = "http://mirror.technicpack.net/Technic/";
     public static final String technicVersions = technicURL + "version/";
 
+<<<<<<< HEAD:src/main/java/net/technicpack/launchercore/TechnicConstants.java
     public static String getTechnicVersionJson(String version) {
         return technicVersions + version + "/" + version + ".json";
     }
+=======
+public interface Version {
+
+    public String getId();
+
+    public ReleaseType getType();
+
+    public void setType(ReleaseType releaseType);
+
+    public Date getUpdatedTime();
+
+    public void setUpdatedTime(Date updatedTime);
+
+    public Date getReleaseTime();
+
+    public void setReleaseTime(Date releaseTime);
+>>>>>>> Re-tab & optimize imports for all files in core.:src/main/java/net/technicpack/launchercore/minecraft/Version.java
 }
